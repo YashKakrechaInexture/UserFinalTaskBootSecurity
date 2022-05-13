@@ -24,7 +24,7 @@
 			<h1 class="heading text-center">Reset Password</h1>
 		</div>
 		
-		<form action="NewPasswordServlet?email=${email}" method="post">
+		<form action="newPasswordServlet?email=${email}" method="post">
 			<div class="outer-box">
 				<div class="row">
 					<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-4 col-lg-offset-4">

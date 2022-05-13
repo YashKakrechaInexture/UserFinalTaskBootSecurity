@@ -169,7 +169,7 @@ public class FrontController {
 		
 		LOG.debug("User deleted, redirecting to admin servlet.");
 		
-		return "redirect:AdminServlet";
+		return "redirect:adminServlet";
 		
 	}
 	
@@ -336,7 +336,7 @@ public class FrontController {
 					UserBean olduser = (UserBean)session.getAttribute("user");
 					if(olduser.getType().equals("admin")) {
 						LOG.debug("Admin is true, redirecting to admin servlet.");
-						return "redirect:AdminServlet";
+						return "redirect:adminServlet";
 					}else if(olduser.getType().equals("user")) {
 						LOG.debug("User session is active, redirecting to homepage.");
 						return "redirect:homepage";
@@ -353,8 +353,8 @@ public class FrontController {
 		}
 	}
 	
-	@PostMapping(path="/UpdateServlet",consumes= {MediaType.MULTIPART_FORM_DATA_VALUE})
-	public String UpdateServlet(@RequestParam(name="profilepic",required=false) MultipartFile filePart,
+	@PostMapping(path="/updateServlet",consumes= {MediaType.MULTIPART_FORM_DATA_VALUE})
+	public String updateServlet(@RequestParam(name="profilepic",required=false) MultipartFile filePart,
 									@ModelAttribute UserBean user,
 									HttpSession session,
 									HttpServletRequest request,
@@ -379,7 +379,7 @@ public class FrontController {
 			LOG.debug("Validation failed.");
 			model.addAttribute("errormsg","Input Field is empty.");
 			
-			return "redirect:EditServlet?email="+user.getEmail();
+			return "redirect:editServlet?email="+user.getEmail();
 			
 		}else {
 			
@@ -400,7 +400,7 @@ public class FrontController {
 					return "redirect:homepage";
 		        }else if(olduser.getType().equals("admin")){
 		        	LOG.debug("Session is active and type is admin. Redirecting to admin servlet.");
-					return "redirect:AdminServlet";
+					return "redirect:adminServlet";
 		        }else {
 		        	LOG.error("Session is active but no user or admin found.");
 		        	return "redirect:index";

@@ -23,7 +23,7 @@
 		<div>
 			<h1 class="heading text-center">Find Your Account</h1>
 		</div>
-		<form action="ResetPasswordServlet" method="post">
+		<form action="resetPasswordServlet" method="post">
 			<div class="outer-box login-box">
 				<span class="errormsg">${error!""}</span>
 				<div class="row">

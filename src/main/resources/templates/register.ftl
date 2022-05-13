@@ -30,12 +30,12 @@
 			<div>
 				<h1 class="heading text-center">Edit Page</h1>
 			</div>
-			<form id="submitform" enctype="multipart/form-data" method="post" action="UpdateServlet?email=${user.email}&uid=${user.uid}">
+			<form id="submitform" enctype="multipart/form-data" method="post" action="updateServlet?email=${user.email}&uid=${user.uid}">
 		<#else>
 			<div>
 				<h1 class="heading text-center">Registration Page</h1>
 			</div>
-			<form id="submitform" enctype="multipart/form-data" method="post" action="aids">
+			<form id="submitform" enctype="multipart/form-data" method="post" action="registerServlet">
 		</#if> 
 			<div class="formpart">
 				<#if validerror??><span class="error">${validerror?join("<br>")}</span></#if>
