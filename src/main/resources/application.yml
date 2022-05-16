@@ -1,0 +1,24 @@
+server:
+  port : 8080
+spring:
+  #profiles: 
+   # active: profile2
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/userfinaltaskboot
+    username: root
+    password: Yash@1234
+  jpa:
+    database: MYSQL
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    generate-ddl: 'true'
+    show-sql: 'true'
+    hibernate:
+      ddl-auto: update
+  #freemarker:
+   # suffix: .ftl
+   # template-loader-path: classpath:/templates
+  #mvc:
+  #  view:
+  #    prefix: /templates/
+  #    suffix: .jsp

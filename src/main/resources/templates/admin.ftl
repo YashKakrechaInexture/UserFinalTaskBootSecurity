@@ -82,7 +82,7 @@
 									</button>
 								</form>
 								
-								<form action="DeleteServlet?uid=${user.uid}" method="post">
+								<form action="deleteServlet?uid=${user.uid}" method="post">
 									<button class="span-btn" id="delete-btn" role="button">
 										<span class="glyphicon glyphicon-remove-circle span-red-icon" aria-hidden="true"></span>
 									</button>

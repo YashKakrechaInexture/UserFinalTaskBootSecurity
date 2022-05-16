@@ -23,7 +23,7 @@ import com.inexture.UserFinalTaskBoot.Beans.UserBean;
  * @author Yash
  *
  */
-@WebFilter(urlPatterns = {"/admin","/AdminServlet","/DeleteServlet"})
+@WebFilter(urlPatterns = {"/admin","/adminServlet","/deleteServlet"})
 public class AdminFilter implements Filter {
 	static final Logger LOG = Logger.getLogger(AdminFilter.class);
     

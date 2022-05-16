@@ -48,7 +48,6 @@ public class UserBean implements Serializable{
 	 */
 	@Column(name="firstname")
 	@NotEmpty(message = "Firstname is required.")
-//	@Pattern(regexp = "[a-zA-Z]+",message = "Firstname should not contain numbers.")
 	private String fname;
 	
 	/**
@@ -56,7 +55,6 @@ public class UserBean implements Serializable{
 	 */
 	@Column(name="lastname")
 	@NotEmpty(message = "Lastname is required.")
-//	@Pattern(regexp = "[a-zA-Z]+",message = "Lastname should not contain numbers.")
 	private String lname;
 	
 	/**
@@ -69,7 +67,6 @@ public class UserBean implements Serializable{
 	/**
 	 * Stores phone number of user
 	 */
-//	@NotEmpty(message = "Phone is required.")
 	private long phone;
 	
 	/**

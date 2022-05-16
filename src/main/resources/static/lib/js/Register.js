@@ -46,7 +46,7 @@ $(document).ready(function(){
 	$('#email').on("keyup",function(){
 		$.ajax({
 			type: "POST",
-			url: "http://localhost:8080/UserFinalTaskMVC/AuthEmailServlet",
+			url: "authEmailServlet",
 			data: $('#submitform').serialize(),
 			dataType: "html",
 			cache: false,

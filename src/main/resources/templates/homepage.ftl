@@ -28,7 +28,7 @@
 				
 				<h4>Welcome, ${Session.user.email}.</h4>
 				
-				<form action="EditServlet?email=${Session.user.email}" method="post">
+				<form action="editServlet?email=${Session.user.email}" method="post">
 					<button type="submit" class="btn btn-default">Edit</button>
 				</form>
 			</div>

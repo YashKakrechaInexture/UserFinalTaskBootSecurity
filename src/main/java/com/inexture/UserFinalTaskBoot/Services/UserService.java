@@ -78,15 +78,7 @@ public class UserService implements UserInterface{
 			}
 			a.setUser(u);
 		}
-		
-		for(int id:aids) {
-//			address.setAid(i);
-//			am.delete(address);
-			am.deleteById(id);
-		}
-//		deletes all addresses
-//		am.deleteAllById(aids);
-		
+			
 		u.setAddress(newAddress);
 		
 		u.setType("user");
@@ -99,6 +91,20 @@ public class UserService implements UserInterface{
 		
 		dm.save(u);
 		
+//		for(int id : aids) {
+////			address.setAid(i);
+////			am.delete(address);
+//			am.delete(am.getById(id));
+//		}
+		
+//		deletes all addresses
+		if(aids.size()>0) {
+			LOG.debug("deleting remaining ids"+aids);
+			am.deleteAllById(aids);
+		}else {
+			LOG.debug("No addresses found to delete.");
+		}
+		
 	}
 	
 	@Override
@@ -107,7 +113,7 @@ public class UserService implements UserInterface{
 		LOG.debug("Inside Register Service.");
 		
 		//checking if user already exist
-		if(dm.getUid(u.getEmail())==0) {
+		if(dm.getUid(u.getEmail())==null) {
 			
 			LOG.debug("No email found, registering to database.");
 			
@@ -220,7 +226,7 @@ public class UserService implements UserInterface{
 	@Override
 	public boolean checkEmail(String email) {
 		LOG.debug("Inside AuthEmail Service.");
-		return dm.getUid(email)==0;
+		return dm.getUid(email)==null;
 	}
 	
 	@Override

@@ -24,7 +24,7 @@ public interface DaoInterface extends JpaRepository<UserBean, Integer>{
 	 * 		   0 - If no user is found with the given email
 	 */
 	@Query("select uid from UserBean where email=?1")
-	public int getUid(String email);
+	public Integer getUid(String email);
 	
 	/**
 	 * This method checks if user is present in database table or not based on given email, password. 
@@ -37,13 +37,6 @@ public interface DaoInterface extends JpaRepository<UserBean, Integer>{
 	 */
 	@Query("from UserBean where email=?1 and password=?2")
 	public UserBean authUser(String email,String password);
-	
-	/**
-	 * It accepts empty arraylist and type of user and fills the arraylist with user bean objects from database table based on given type of user. 
-	 * @param type - type of user. Exa. admin, user.
-	 * @return list - list of users
-	 */
-//	public List<UserBean> showUserData(String type);
 	
 	/**
 	 * This method finds user based on given email, birthdate and security answers in forgot password.

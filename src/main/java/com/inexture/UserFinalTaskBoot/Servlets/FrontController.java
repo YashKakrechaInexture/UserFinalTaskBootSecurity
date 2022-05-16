@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -42,7 +43,18 @@ public class FrontController {
 	}
 	
 	@RequestMapping("/homepage")
-	public String homepage() {
+	public String homepage(HttpSession session, HttpServletRequest req,HttpServletResponse res) {
+		
+		res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+        res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+        res.setDateHeader("Expires", 0);
+		
+        session = req.getSession(false);
+        
+        if(session==null || session.getAttribute("user")==null) {
+        	return "index";
+        }
+        
 		return "homepage";
 	}
 	
@@ -54,6 +66,11 @@ public class FrontController {
 	@RequestMapping("/resetPassword")
 	public String resetPassword() {
 		return "resetPassword";
+	}
+
+	@RequestMapping("/temp")
+	public String temp() {
+		return "temp";
 	}
 	
 	@RequestMapping("/newPassword")
@@ -142,7 +159,7 @@ public class FrontController {
 		
 	}
 	
-	@RequestMapping("/authEmailServlet")
+	@PostMapping("/authEmailServlet")
 	@ResponseBody
 	public String authEmailServlet(@RequestParam String email,HttpSession session) {
 		LOG.debug("Inside Auth email servlet.");
