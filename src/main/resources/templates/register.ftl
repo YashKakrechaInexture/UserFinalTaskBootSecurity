@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Insert title here</title>
+	<title>User Detail Page</title>
 	
 	<!-- jquery cdn -->
 	<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
@@ -39,6 +39,7 @@
 		</#if> 
 			<div class="formpart">
 				<#if validerror??><span class="error">${validerror?join("<br>")}</span></#if>
+				<span class="error">${errormsg!""}</span>
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">

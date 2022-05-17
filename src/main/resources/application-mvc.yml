@@ -1,6 +1,8 @@
 server:
   port : 8080
 spring:
+  #profiles: 
+    #active: profile2
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/userfinaltaskmvc

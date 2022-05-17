@@ -72,7 +72,7 @@ public class LoginFilter implements Filter {
 	        		res.sendRedirect("homepage");
 	        	}else if( ("admin").equals(u.getType()) ) {
 	        		LOG.debug("Session is active and its type admin, redirecting to AdminServlet.");
-	        		res.sendRedirect("AdminServlet");
+	        		res.sendRedirect("adminServlet");
 	        	}else {
 	        		LOG.error("Session is active but not user or admin found.");
 		        	chain.doFilter(request, response);

@@ -62,7 +62,7 @@ public class HomepageFilter implements Filter {
 			UserBean u = (UserBean)session.getAttribute("user");
 			if(u.getType().equals("admin")) {
 				LOG.debug("Session is active, and type is admin, redirecting to admin servlet.");
-				res.sendRedirect("AdminServlet");
+				res.sendRedirect("adminServlet");
 			}else {
 				LOG.error("Session is active, and type user, let him pass.");
 				chain.doFilter(request, response);

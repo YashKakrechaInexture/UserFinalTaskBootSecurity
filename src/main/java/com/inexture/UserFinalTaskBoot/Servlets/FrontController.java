@@ -85,7 +85,7 @@ public class FrontController {
 	}
 	
 	@RequestMapping("/loginServlet")
-	public String login(HttpServletRequest request,HttpSession session) {
+	public String login(HttpServletRequest request,HttpSession session,Model model) {
 		
 		LOG.debug("Inside LoginServlet");
 		
@@ -124,7 +124,8 @@ public class FrontController {
 		}else{
 			
 			LOG.info("No user found with given email and password, redirecting to login page.");
-			return "redirect:index";
+			model.addAttribute("errormsg","No user found.");
+			return "index";
 		}
 	}
 	
@@ -325,6 +326,14 @@ public class FrontController {
 				LOG.debug("Validation failed.");
 				model.addAttribute("failuser",user);
 				model.addAttribute("errormsg","Input Field is empty or too large or type mismatch.");
+				
+				return "register";
+				
+			}else if(!us.checkEmail(user.getEmail())) {
+				
+				LOG.debug("Validation failed.");
+				model.addAttribute("failuser",user);
+				model.addAttribute("errormsg","Email already exist.");
 				
 				return "register";
 				
