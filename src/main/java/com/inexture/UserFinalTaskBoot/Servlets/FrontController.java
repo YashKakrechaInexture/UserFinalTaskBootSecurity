@@ -253,7 +253,7 @@ public class FrontController {
 		
 		LOG.debug("Inside Reset Password Servlet.");
 		
-		LOG.debug("Got data and set in userbean.");
+		LOG.debug("Got data and set in user bean.");
 		
 		if(us.findUser(u.getEmail(),u.getBirthdate(),u.getQue1(),u.getQue2(),u.getQue3())>0) {
 			LOG.debug("User found, redirecting to new password page.");

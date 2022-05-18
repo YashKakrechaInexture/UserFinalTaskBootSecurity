@@ -55,9 +55,6 @@ public class UserService implements UserInterface{
 	public void deleteUser(int uid) {
 		
 		LOG.debug("Inside Delete User Service");
-		
-//		user.setUid(uid);
-//		dm.delete(user);
 		dm.deleteById(uid);
 	}
 	
@@ -69,8 +66,7 @@ public class UserService implements UserInterface{
 		List<AddressBean> newAddress = u.getAddress();
 		
 		List<Integer> aids = am.getAids(u.getUid());
-//		am.getAids(u.getUid());
-		
+
 		for(AddressBean a:newAddress) {
 			if(aids.size()>0) {
 				a.setAid(aids.get(0));
@@ -157,7 +153,7 @@ public class UserService implements UserInterface{
 		ShaEncryption sha = new ShaEncryption();
 		String encryptedPassword = sha.passwordEncryption(password);
 		
-		LOG.info("Password Incrypted.");
+		LOG.info("Password Encrypted.");
 		
 		int uid = dm.getUid(email);
 		

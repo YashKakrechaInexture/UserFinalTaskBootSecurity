@@ -24,7 +24,7 @@ public interface DaoInterface extends JpaRepository<UserBean, Integer>{
 	 * 		   0 - If no user is found with the given email
 	 */
 	@Query("select uid from UserBean where email=?1")
-	public Integer getUid(String email);
+	Integer getUid(String email);
 	
 	/**
 	 * This method checks if user is present in database table or not based on given email, password. 
@@ -36,15 +36,19 @@ public interface DaoInterface extends JpaRepository<UserBean, Integer>{
 	 * 		   null - if no user found in table
 	 */
 	@Query("from UserBean where email=?1 and password=?2")
-	public UserBean authUser(String email,String password);
+	UserBean authUser(String email,String password);
 	
 	/**
 	 * This method finds user based on given email, birthdate and security answers in forgot password.
-	 * @param u - user bean objects
+	 * @param email - email address of user
+	 * @param birthdate - birthdate of user
+	 * @param ans1 - ans1 of user
+	 * @param ans2 - ans2 of user
+	 * @param ans3 - ans3 of user
 	 * @return false - If user found in database table.<br>
 	 * 		   true - If no user found with given information in database table.
 	 */
 	@Query("select uid from UserBean where email=?1 and birthdate=?2 and ans1=?3 and ans2=?4 and ans3=?5")
-	public int findUser(String email, String birthdate, String ans1, String ans2, String ans3);
+	Integer findUser(String email, String birthdate, String ans1, String ans2, String ans3);
 	
 }
