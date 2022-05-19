@@ -38,7 +38,12 @@ public class UserService implements UserInterface{
 	
 	@Autowired
 	AddressBean address;
-	
+
+	UserService(DaoInterface dm,AddressDaoInterface am){
+		this.dm=dm;
+		this.am=am;
+	}
+
 	@Override
 	public List<UserBean> showUsers(String type) {
 		
