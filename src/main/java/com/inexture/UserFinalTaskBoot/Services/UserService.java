@@ -64,7 +64,7 @@ public class UserService implements UserInterface{
 	}
 	
 	@Override
-	public void updateUser(UserBean u,String fileName) {
+	public void updateUser(UserBean u) {
 		
 		LOG.debug("Inside Update Service.");
 		
@@ -83,12 +83,6 @@ public class UserService implements UserInterface{
 		u.setAddress(newAddress);
 		
 		u.setType("user");
-		
-		try {
-			u.setImage(IOUtils.toByteArray(u.getInputStream()));
-		} catch (IOException e) {
-			LOG.fatal("Something went wrong! Exception : "+e);
-		}
 		
 		dm.save(u);
 		
@@ -146,6 +140,9 @@ public class UserService implements UserInterface{
 			dm.save(u);
 			
 			LOG.debug("User Registered.");
+		
+		}else {
+			LOG.debug("User Already Exist.");
 		}
 	}
 	
@@ -206,22 +203,28 @@ public class UserService implements UserInterface{
 	public UserBean editProfile(String email) {
 		
 		LOG.debug("Inside Edit profile service");
+
+		List<UserBean> userList = dm.findByEmail(email);
 		
-		int uid = dm.getUid(email);
-		
-		UserBean u = dm.findById(uid).orElse(null);
-		
-		byte[] initarray = {0,1,2};
-		
-		if(u.getImage()!=null) {
-			initarray = u.getImage();
+		if(userList.size()==1) {
+			UserBean u = userList.get(0);
+			
+			byte[] initarray = null;
+			
+			if(u.getImage()!=null) {
+				LOG.debug("Image is not null, converting to inputstream.");
+				initarray = u.getImage();
+			}
+			
+			u.setInputStream(new ByteArrayInputStream(initarray));
+			
+			u.setBase64Image( this.convertToBase64Image(u.getInputStream()) );
+			
+			return u;
+			
+		}else {
+			return null;
 		}
-		
-		u.setInputStream(new ByteArrayInputStream(initarray));
-		
-		u.setBase64Image( this.convertToBase64Image(u.getInputStream()) );
-		
-		return u;
 	}
 	
 	@Override

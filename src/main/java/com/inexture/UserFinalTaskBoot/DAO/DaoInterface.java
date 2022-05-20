@@ -17,6 +17,9 @@ public interface DaoInterface extends JpaRepository<UserBean, Integer>{
 	
 	
 	List<UserBean> findByType(String type);
+	
+	List<UserBean> findByEmail(String email);
+	
 	/**
 	 * It returns user id from the table related to the email given, if no user found then returns 0.
 	 * @param email - Stores email of user

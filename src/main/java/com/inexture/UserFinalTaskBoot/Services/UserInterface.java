@@ -38,9 +38,8 @@ public interface UserInterface {
 	 * It calls the update user, update image, update address method of dao and it updates the
 	 * all the user data in the database table.
 	 * @param u - user bean object
-	 * @param fileName - filename of image input
 	 */
-	public void updateUser(UserBean u,String fileName);
+	public void updateUser(UserBean u);
 	
 	/**
 	 * It calls the delete user dao method and it delets the user based on given user id.

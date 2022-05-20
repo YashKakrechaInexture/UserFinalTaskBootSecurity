@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -389,17 +390,26 @@ public class FrontController {
 		LOG.debug("Inside Update Servlet.");
 		
 		InputStream inputstream = null;
-		String fileName = null;
 		try {
 			if(null!=filePart && filePart.getSize()!=0) {
-				fileName = filePart.getName();
+				LOG.debug("Image is provided.");
 				inputstream = filePart.getInputStream();
+				user.setInputStream(inputstream);
+				try {
+					user.setImage(IOUtils.toByteArray(user.getInputStream()));
+				} catch (IOException e) {
+					LOG.fatal("Something went wrong! Exception : "+e);
+				}
+				
+			}else {
+				LOG.debug("Image is not provided, getting old image from dao.");
+				UserBean olduser = us.editProfile(user.getEmail());
+				inputstream = olduser.getInputStream();
+				user.setImage(olduser.getImage());
 			}
 		} catch (IOException e) {
 			LOG.error("Something went wrong! Exception : {}",e);
 		}
-		
-		user.setInputStream(inputstream);
 		
 		if(!Validation.validate(user)) {
 			LOG.debug("Validation failed.");
@@ -417,7 +427,7 @@ public class FrontController {
 				
 				LOG.debug("Session is not null, updating user.");
 				
-				us.updateUser(user,fileName);
+				us.updateUser(user);
 				
 				UserBean olduser = (UserBean)session.getAttribute("user");
 				

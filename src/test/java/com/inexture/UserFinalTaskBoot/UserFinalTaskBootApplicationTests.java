@@ -11,8 +11,6 @@ class UserFinalTaskBootApplicationTests {
 
 	@Test
 	void contextLoads() {
-		FrontController fc = new FrontController();
-		fc.index();
 	}
 
 }
