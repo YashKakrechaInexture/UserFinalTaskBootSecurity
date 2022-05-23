@@ -46,15 +46,15 @@ public class FrontController {
 	@RequestMapping("/homepage")
 	public String homepage(HttpSession session, HttpServletRequest req,HttpServletResponse res) {
 		
-		res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-        res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
-        res.setDateHeader("Expires", 0);
-		
-        session = req.getSession(false);
-        
-        if(session==null || session.getAttribute("user")==null) {
-        	return "index";
-        }
+//		res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+//        res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+//        res.setDateHeader("Expires", 0);
+//		
+//        session = req.getSession(false);
+//        
+//        if(session==null || session.getAttribute("user")==null) {
+//        	return "index";
+//        }
         
 		return "homepage";
 	}
@@ -196,7 +196,7 @@ public class FrontController {
 	public ModelAndView editServlet(@RequestParam String email,HttpSession session) {
 		LOG.debug("Inside Edit Servlet.");
 		
-		if(session != null) {
+		if(session != null && session.getAttribute("user")!=null) {
 			
 			LOG.debug("Session not null.");
 			

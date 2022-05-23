@@ -6,32 +6,33 @@ import com.inexture.UserFinalTaskBoot.DAO.AddressDaoInterface;
 import com.inexture.UserFinalTaskBoot.DAO.DaoInterface;
 import com.inexture.UserFinalTaskBoot.Utilities.ShaEncryption;
 
-import uk.co.jemos.podam.api.PodamFactory;
-import uk.co.jemos.podam.api.PodamFactoryImpl;
+//import uk.co.jemos.podam.api.PodamFactory;
+//import uk.co.jemos.podam.api.PodamFactoryImpl;
 
-import org.aspectj.lang.annotation.Before;
+//import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
+//import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.mock.mockito.MockBean;
+//import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+//import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
-import static org.mockito.Mockito.atLeast;
+//import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+//import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.atMostOnce;
-import static org.mockito.Mockito.mock;
+//import static org.mockito.Mockito.atMostOnce;
+//import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
@@ -47,7 +48,7 @@ class UserServiceTest {
 
     @InjectMocks
     private UserService userService;
-
+    
     @InjectMocks
     UserBean userBean;
     
@@ -73,6 +74,7 @@ class UserServiceTest {
         UserBean userBean = new UserBean("yash","kakrecha","yash7890@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
         
     	dm.save(userBean);
+//    	when(dm.save(any(UserBean.class))).thenReturn(userBean);
     }
     
     @Test
@@ -126,7 +128,7 @@ class UserServiceTest {
 //    	System.out.println(userBean.getEmail());
 //    	userBean.setEmail("abc");
     	userService.registerUser(userBean);
-        verify(dm,atLeastOnce()).save(userBean);
+        verify(dm,atLeastOnce()).save(any());
     }
     
     @Test

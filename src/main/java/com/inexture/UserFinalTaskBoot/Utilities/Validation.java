@@ -42,37 +42,37 @@ public class Validation {
 		
 		LOG.debug("Inside Validation class.");
 		
-		if(fname.equals("") || fname.length()>255) {
+		if(fname==null || fname.equals("") || fname.length()>255) {
 			LOG.debug("Validation failed for fname.");
 			return false;
-		}else if(lname.equals("") || lname.length()>255) {
+		}else if(lname==null || lname.equals("") || lname.length()>255) {
 			LOG.debug("Validation failed for lname.");
 			return false;
-		}else if(email.equals("") || email.length()>255) {
+		}else if(email==null || email.equals("") || email.length()>255) {
 			LOG.debug("Validation failed for email.");
 			return false;
 		}else if(phone == 0) {
 			LOG.debug("Validation failed for phone.");
 			return false;
-		}else if(gender.equals("") || gender.length()>255) {
+		}else if(gender==null || gender.equals("") || gender.length()>255) {
 			LOG.debug("Validation failed for gender.");
 			return false;
-		}else if(birthdate.equals("") || birthdate.length()>255) {
+		}else if(birthdate==null || birthdate.equals("") || birthdate.length()>255) {
 			LOG.debug("Validation failed for birthdate.");
 			return false;
-		}else if(hobby.equals("") || hobby.length()>255) {
+		}else if(hobby==null || hobby.equals("") || hobby.length()>255) {
 			LOG.debug("Validation failed for hobby.");
 			return false;
-		}else if(que1.equals("") || que1.length()>255) {
+		}else if(que1==null || que1.equals("") || que1.length()>255) {
 			LOG.debug("Validation failed for que1.");
 			return false;
-		}else if(que2.equals("") || que2.length()>255) {
+		}else if(que2==null || que2.equals("") || que2.length()>255) {
 			LOG.debug("Validation failed for que2.");
 			return false;
-		}else if(que3.equals("") || que3.length()>255) {
+		}else if(que3==null || que3.equals("") || que3.length()>255) {
 			LOG.debug("Validation failed for que3.");
 			return false;
-		}else if(address.size()<1) {
+		}else if(address==null || address.size()<1) {
 			LOG.debug("Validation failed for address size.");
 			return false;
 		}

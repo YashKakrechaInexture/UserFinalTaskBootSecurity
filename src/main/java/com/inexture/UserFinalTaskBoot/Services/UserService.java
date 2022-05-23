@@ -119,7 +119,6 @@ public class UserService implements UserInterface{
 			LOG.info("Password Encrypted.");
 			
 			//adding user in all address
-			
 			List<AddressBean> newAddress = u.getAddress();
 			
 			for(AddressBean a:newAddress) {

@@ -184,19 +184,19 @@ public class UserBean implements Serializable{
 	 * Constructor of User bean
 	 * @param email - Stores email of user
 	 */
-	public UserBean(String email) {
-		this.email = email;
-	}
+//	public UserBean(String email) {
+//		this.email = email;
+//	}
 	
 	/**
 	 * Constructor of User bean
 	 * @param email - Stores email of user
 	 * @param password - Stores password of user
 	 */
-	public UserBean(String email,String password) {
-		this.email = email;
-		this.password = password;
-	}
+//	public UserBean(String email,String password) {
+//		this.email = email;
+//		this.password = password;
+//	}
 	
 	/**
 	 * Constructor of User bean
@@ -209,16 +209,16 @@ public class UserBean implements Serializable{
 	 * @param birthdate - Stores birthdate of user
 	 * @param hobby - Stores hobbies of user 
 	 */
-	public UserBean(int uid,String fname,String lname,String email,long phone,String gender,String birthdate,String hobby){
-		this.uid = uid;
-		this.fname = fname;
-		this.lname = lname;
-		this.email = email;
-		this.phone = phone;
-		this.gender = gender;
-		this.birthdate = birthdate;
-		this.hobby = hobby;
-	}
+//	public UserBean(int uid,String fname,String lname,String email,long phone,String gender,String birthdate,String hobby){
+//		this.uid = uid;
+//		this.fname = fname;
+//		this.lname = lname;
+//		this.email = email;
+//		this.phone = phone;
+//		this.gender = gender;
+//		this.birthdate = birthdate;
+//		this.hobby = hobby;
+//	}
 	
 	/**
 	 * Constructor of User bean
@@ -228,13 +228,13 @@ public class UserBean implements Serializable{
 	 * @param que2 - Stores security question2's answer of user
 	 * @param que3 - Stores security question3's answer of user
 	 */
-	public UserBean(String email,String birthdate,String que1,String que2,String que3) {
-		this.email = email;
-		this.birthdate = birthdate;
-		this.que1 = que1;
-		this.que2 = que2;
-		this.que3 = que3;
-	}
+//	public UserBean(String email,String birthdate,String que1,String que2,String que3) {
+//		this.email = email;
+//		this.birthdate = birthdate;
+//		this.que1 = que1;
+//		this.que2 = que2;
+//		this.que3 = que3;
+//	}
 	
 	/** 
 	 * Setter method of user id of user bean

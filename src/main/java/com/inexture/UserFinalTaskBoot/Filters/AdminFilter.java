@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 
 import com.inexture.UserFinalTaskBoot.Beans.UserBean;
 
@@ -23,6 +25,7 @@ import com.inexture.UserFinalTaskBoot.Beans.UserBean;
  * @author Yash
  *
  */
+
 @WebFilter(urlPatterns = {"/admin","/adminServlet","/deleteServlet"})
 public class AdminFilter implements Filter {
 	static final Logger LOG = Logger.getLogger(AdminFilter.class);

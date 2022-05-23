@@ -82,14 +82,14 @@ public class AddressBean implements Serializable{
 	 * @param country - Stores country line of address
 	 * @param pincode - Stores pincode of address
 	 */
-	public AddressBean(int aid,String home, String city, String state, String country, String pincode) {
-		this.aid = aid;
-		this.home = home;
-		this.city = city;
-		this.state = state;
-		this.country = country;
-		this.pincode = pincode;
-	}
+//	public AddressBean(int aid,String home, String city, String state, String country, String pincode) {
+//		this.aid = aid;
+//		this.home = home;
+//		this.city = city;
+//		this.state = state;
+//		this.country = country;
+//		this.pincode = pincode;
+//	}
 	
 	/**
 	 * Counstructor of address bean
