@@ -106,12 +106,12 @@ public class FrontController {
 			
 			LOG.debug("Session created and UserBean set to attribute.");
 			
-			if(u.getType().equals("admin")) {
+			if(u.getType()!=null && u.getType().equals("admin")) {
 				
 				LOG.info("User is admin, redirecting to admin page.");
 				return "redirect:adminServlet";
 				
-			}else if (u.getType().equals("user")){
+			}else if (u.getType()!=null && u.getType().equals("user")){
 				
 				LOG.info("User is normal user, redirecting to user home page.");
 				return "redirect:homepage";
@@ -330,19 +330,19 @@ public class FrontController {
 				
 				return "register";
 				
-			}else if(!us.checkEmail(user.getEmail())) {
-				
-				LOG.debug("Validation failed.");
-				model.addAttribute("failuser",user);
-				model.addAttribute("errormsg","Email already exist.");
-				
-				return "register";
-				
 			}else if(!password1.equals(password2)) {
 				
 				LOG.debug("Password not matched.");
 				model.addAttribute("failuser",user);
 				model.addAttribute("errormsg","Password not matched.");
+				
+				return "register";
+				
+			}else if(!us.checkEmail(user.getEmail())) {
+				
+				LOG.debug("Validation failed.");
+				model.addAttribute("failuser",user);
+				model.addAttribute("errormsg","Email already exist.");
 				
 				return "register";
 				
@@ -361,10 +361,10 @@ public class FrontController {
 					LOG.debug("Session is not null");
 					
 					UserBean olduser = (UserBean)session.getAttribute("user");
-					if(olduser.getType().equals("admin")) {
+					if(olduser.getType()!=null && olduser.getType().equals("admin")) {
 						LOG.debug("Admin is true, redirecting to admin servlet.");
 						return "redirect:adminServlet";
-					}else if(olduser.getType().equals("user")) {
+					}else if(olduser.getType()!=null && olduser.getType().equals("user")) {
 						LOG.debug("User session is active, redirecting to homepage.");
 						return "redirect:homepage";
 					}else {
@@ -423,7 +423,7 @@ public class FrontController {
 			
 			session=request.getSession(false);  
 			
-			if(session!=null) {
+			if(session!=null && session.getAttribute("user")!=null) {
 				
 				LOG.debug("Session is not null, updating user.");
 				
@@ -431,10 +431,10 @@ public class FrontController {
 				
 				UserBean olduser = (UserBean)session.getAttribute("user");
 				
-				if(olduser.getType().equals("user")) {
+				if(olduser.getType()!=null && olduser.getType().equals("user")) {
 					LOG.debug("Session is active and type is user. Redirecting to homepage.");
 					return "redirect:homepage";
-		        }else if(olduser.getType().equals("admin")){
+		        }else if(olduser.getType()!=null && olduser.getType().equals("admin")){
 		        	LOG.debug("Session is active and type is admin. Redirecting to admin servlet.");
 					return "redirect:adminServlet";
 		        }else {

@@ -22,6 +22,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 //import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -90,7 +92,7 @@ class UserServiceTest {
     }
 
     @Test
-    void updateUser() {
+    void updateUser1() {
 
         AddressBean addressBean = new AddressBean("ABC","ahmedabad","gujrat","india","132456");
 
@@ -106,12 +108,18 @@ class UserServiceTest {
 
         UserBean userBean = new UserBean("yash","kakrecha","yash789@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
         
+        List<Integer> aids = new ArrayList<Integer>();
+        aids.add(1);
+        
+        when(am.getAids(0)).thenReturn(aids);
+        
     	userService.updateUser(userBean);
         verify(dm,atLeastOnce()).save(any());
     }
-
+    
     @Test
-    void registerUser() {
+    void updateUser2() {
+
         AddressBean addressBean = new AddressBean("ABC","ahmedabad","gujrat","india","132456");
 
         ArrayList<AddressBean> addressList = new ArrayList<>();
@@ -125,16 +133,116 @@ class UserServiceTest {
         };
 
         UserBean userBean = new UserBean("yash","kakrecha","yash789@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
-//    	System.out.println(userBean.getEmail());
-//    	userBean.setEmail("abc");
+        
+        List<Integer> aids = new ArrayList<Integer>();
+        aids.add(1);
+        aids.add(2);
+        
+        when(am.getAids(0)).thenReturn(aids);
+        
+    	userService.updateUser(userBean);
+        verify(dm,atLeastOnce()).save(any());
+    }
+
+    @Test
+    void registerUser1() {
+        AddressBean addressBean = new AddressBean("ABC","ahmedabad","gujrat","india","132456");
+
+        ArrayList<AddressBean> addressList = new ArrayList<>();
+        addressList.add(addressBean);
+
+        InputStream inputStream = new InputStream() {
+            @Override
+            public int read() throws IOException {
+                return -1;
+            }
+        };
+
+        UserBean userBean = new UserBean("yash","kakrecha","yash789@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
+        
+        when(dm.getUid("yash789@gmail.com")).thenReturn(null);
+        
     	userService.registerUser(userBean);
         verify(dm,atLeastOnce()).save(any());
     }
     
     @Test
-    void notRegisterUser() {
+    void registerUser2() {
+    	    	
+    	AddressBean addressBean = new AddressBean("ABC","ahmedabad","gujrat","india","132456");
+
+        ArrayList<AddressBean> addressList = new ArrayList<>();
+        addressList.add(addressBean);
+
+        InputStream inputStream = new InputStream() {
+            @Override
+            public int read() throws IOException {
+                return -1;
+            }
+        };
+
+        UserBean userBean = new UserBean("yash","kakrecha","yash789@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
+        
+        when(dm.getUid("yash789@gmail.com")).thenReturn(1);
+        
+    	userService.registerUser(userBean);
+        verify(dm,never()).save(userBean);
+    }
+    
+    @Test
+    void resetPass1() {
+        
+    	AddressBean addressBean = new AddressBean("ABC","ahmedabad","gujrat","india","132456");
+
+        ArrayList<AddressBean> addressList = new ArrayList<>();
+        addressList.add(addressBean);
+
+        InputStream inputStream = new InputStream() {
+            @Override
+            public int read() throws IOException {
+                return -1;
+            }
+        };
+
+        UserBean userBean = new UserBean("yash","kakrecha","yash789@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
     	
-    	System.out.println(dm.findByEmail("yash7890@gmail.com"));
+        Optional<UserBean> opUser = Optional.ofNullable(userBean);
+        
+    	when(dm.getUid("yash789@gmail.com")).thenReturn(1);
+    	when(dm.findById(1)).thenReturn(opUser);
+        
+        userService.resetPass("yash789@gmail.com","yash123");
+        
+        verify(dm,atLeastOnce()).save(userBean);
+    }
+    
+    @Test
+    void resetPass2() {
+        
+        UserBean userBean = null;
+    	
+        Optional<UserBean> opUser = Optional.ofNullable(userBean);
+        
+    	when(dm.getUid("yash789@gmail.com")).thenReturn(1);
+    	when(dm.findById(1)).thenReturn(opUser);
+        
+        userService.resetPass("yash789@gmail.com","yash123");
+        
+        verify(dm,never()).save(userBean);
+    }
+    
+    @Test
+    void resetPass3() {
+        
+    	when(dm.getUid("yash789@gmail.com")).thenReturn(0);
+    	
+        userService.resetPass("yash789@gmail.com","yash123");
+        
+        verify(dm,never()).save(userBean);
+    }
+
+    @Test
+    void checkUser1() {
     	
     	AddressBean addressBean = new AddressBean("ABC","ahmedabad","gujrat","india","132456");
 
@@ -148,33 +256,99 @@ class UserServiceTest {
             }
         };
 
-        UserBean userBean = new UserBean("yash","kakrecha",null,1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
+        UserBean userBean = new UserBean("yash","kakrecha","yash789@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
         
-    	userService.registerUser(userBean);
+        byte[] emptyArray = new byte[0];
+        userBean.setImage(emptyArray);
+        
+    	when(dm.authUser(any(),any())).thenReturn(userBean);
     	
-        verify(dm,never()).save(userBean);
+        userService.checkUser("yash789@gmail.com","yash123");
+        
     }
     
     @Test
-    void resetPass() {
-        userService.resetPass("yash789@gmail.com","yash123");
-    }
-
-    @Test
-    void checkUser() {
+    void checkUser2() {
+    	
+    	when(dm.authUser(any(),any())).thenReturn(null);
+    	
         userService.checkUser("yash789@gmail.com","yash123");
-        verify(dm,atLeastOnce()).authUser(any(),any());
+        
     }
 
     @Test
-    void editProfile() {
+    void editProfile1() {
+    	
+    	AddressBean addressBean = new AddressBean("ABC","ahmedabad","gujrat","india","132456");
+
+        ArrayList<AddressBean> addressList = new ArrayList<>();
+        addressList.add(addressBean);
+
+        InputStream inputStream = new InputStream() {
+            @Override
+            public int read() throws IOException {
+                return -1;
+            }
+        };
+
+        UserBean userBean = new UserBean("yash","kakrecha","yash789@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
+    	
+        byte[] emptyArray = new byte[0];
+        userBean.setImage(emptyArray);
+        
+        ArrayList<UserBean> userList = new ArrayList<UserBean>();
+    	userList.add(userBean);
+        
+    	when(dm.findByEmail("yash789@gmail.com")).thenReturn(userList);
+    	
+    	userService.editProfile("yash789@gmail.com");
+    }
+    
+    @Test
+    void editProfile2() {
+    	
+    	ArrayList<UserBean> userList = new ArrayList<UserBean>();
+    	
+    	when(dm.findByEmail("yash789@gmail.com")).thenReturn(userList);
+    	
+    	userService.editProfile("yash789@gmail.com");
+    }
+    
+    @Test
+    void editProfile3() {
+    	
+    	AddressBean addressBean = new AddressBean("ABC","ahmedabad","gujrat","india","132456");
+
+        ArrayList<AddressBean> addressList = new ArrayList<>();
+        addressList.add(addressBean);
+
+        InputStream inputStream = new InputStream() {
+            @Override
+            public int read() throws IOException {
+                return -1;
+            }
+        };
+
+        UserBean userBean = new UserBean("yash","kakrecha","yash789@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
+    	
+        ArrayList<UserBean> userList = new ArrayList<UserBean>();
+    	userList.add(userBean);
+        
+    	when(dm.findByEmail("yash789@gmail.com")).thenReturn(userList);
+    	
     	userService.editProfile("yash789@gmail.com");
     }
 
     @Test
-    void checkEmail() {
+    void checkEmail1() {
+    	when(dm.getUid("yash789@gmail.com")).thenReturn(null);
     	userService.checkEmail("yash789@gmail.com");
-    	System.out.println(dm.getUid("yash789@gmail.com")==null);
+    }
+    
+    @Test
+    void checkEmail2() {
+    	when(dm.getUid("yash789@gmail.com")).thenReturn(1);
+    	userService.checkEmail("yash789@gmail.com");
     }
 
     @Test

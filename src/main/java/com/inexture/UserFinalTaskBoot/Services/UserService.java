@@ -163,9 +163,7 @@ public class UserService implements UserInterface{
 			
 			if(u!=null) {
 				u.setPassword(encryptedPassword);
-				System.out.println(u);
 				dm.save(u);
-				System.out.println(dm.findById(uid));
 				
 				LOG.info("Password changed.");
 			}else {
@@ -211,13 +209,15 @@ public class UserService implements UserInterface{
 			byte[] initarray = null;
 			
 			if(u.getImage()!=null) {
+				
 				LOG.debug("Image is not null, converting to inputstream.");
+				
 				initarray = u.getImage();
+				
+				u.setInputStream(new ByteArrayInputStream(initarray));
+				
+				u.setBase64Image( this.convertToBase64Image(u.getInputStream()) );
 			}
-			
-			u.setInputStream(new ByteArrayInputStream(initarray));
-			
-			u.setBase64Image( this.convertToBase64Image(u.getInputStream()) );
 			
 			return u;
 			
