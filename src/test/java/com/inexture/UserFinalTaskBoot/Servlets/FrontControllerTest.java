@@ -20,6 +20,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -37,6 +39,10 @@ import com.inexture.UserFinalTaskBoot.Beans.AddressBean;
 import com.inexture.UserFinalTaskBoot.Beans.UserBean;
 import com.inexture.UserFinalTaskBoot.DAO.AddressDaoInterface;
 import com.inexture.UserFinalTaskBoot.DAO.DaoInterface;
+//import com.inexture.UserFinalTaskBoot.Filters.AdminFilter;
+//import com.inexture.UserFinalTaskBoot.Filters.HomepageFilter;
+//import com.inexture.UserFinalTaskBoot.Filters.LoginFilter;
+//import com.inexture.UserFinalTaskBoot.Filters.UserFilter;
 import com.inexture.UserFinalTaskBoot.Services.UserService;
 import com.inexture.UserFinalTaskBoot.Utilities.ShaEncryption;
 
@@ -60,6 +66,8 @@ import javax.servlet.http.HttpSession;
 //@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 //@AutoConfigureMockMvc
 @WebMvcTest(FrontController.class)
+//@ActiveProfiles({"profile1","dev"})
+//@ContextConfiguration(classes = ViewConfigurationClass.class)
 class FrontControllerTest{
 
 	@Autowired
@@ -91,11 +99,23 @@ class FrontControllerTest{
 //		mvc = MockMvcBuilders.webAppContextSetup((WebApplicationContext) fc).build();
 //	}
 
+//    @MockBean
+//    private AdminFilter adminFilter;
+//	
+//    @MockBean
+//	private HomepageFilter homepageFilter;
+//	
+//    @MockBean
+//	private LoginFilter loginFilter;
+//	
+//    @MockBean
+//	private UserFilter userFilter;
+    
 	@Test
 	void testIndex() throws Exception {
 		
-//		mvc.perform(get("/index"))
-//				.andExpect(status().isOk());
+		mvc.perform(get("/index"))
+				.andExpect(status().isOk());
 		
 //		mvc.perform(get("/index"))
 //		.andExpect((ResultMatcher) RETURNS_SELF);
@@ -104,6 +124,8 @@ class FrontControllerTest{
 
 	@Test
 	void testHomepage() throws Exception {
+		mvc.perform(get("/homepage"))
+				.andExpect(status().isOk());
 //		mvc.perform(post("/homepage"))
 //			.andExpect(view().name("homepage"));
 //		mvc.perform(post("/homepage"))
@@ -112,14 +134,20 @@ class FrontControllerTest{
 
 	@Test
 	void testRegister() throws Exception {
+		mvc.perform(get("/register"))
+				.andExpect(status().isOk());
 	}
 
 	@Test
 	void testResetPassword() throws Exception {
+		mvc.perform(get("/resetPassword"))
+				.andExpect(status().isOk());
 	}
 
 	@Test
 	void testTemp() throws Exception {
+		mvc.perform(get("/temp"))
+				.andExpect(status().isOk());
 	}
 
 	@Test
@@ -133,9 +161,9 @@ class FrontControllerTest{
 	@Test
 	void testNewPassword2() throws Exception {
 		
-//		mvc.perform(post("/newPassword")
-//						.param("email","fsdhj@gmail.com"))
-//			.andExpect(view().name("newPassword"));
+		mvc.perform(post("/newPassword")
+						.param("email","fsdhj@gmail.com"))
+			.andExpect(status().isOk());
 	}
 
 	@Test
@@ -146,12 +174,7 @@ class FrontControllerTest{
         ArrayList<AddressBean> addressList = new ArrayList<>();
         addressList.add(addressBean);
 
-        InputStream inputStream = new InputStream() {
-            @Override
-            public int read() throws IOException {
-                return -1;
-            }
-        };
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
 
         UserBean userBean = new UserBean("yash","kakrecha","yash7890@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
         userBean.setType("user");
@@ -172,12 +195,7 @@ class FrontControllerTest{
         ArrayList<AddressBean> addressList = new ArrayList<>();
         addressList.add(addressBean);
 
-        InputStream inputStream = new InputStream() {
-            @Override
-            public int read() throws IOException {
-                return -1;
-            }
-        };
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
 
         UserBean userBean = new UserBean("yash","kakrecha","yash7890@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
         userBean.setType("admin");
@@ -198,12 +216,7 @@ class FrontControllerTest{
         ArrayList<AddressBean> addressList = new ArrayList<>();
         addressList.add(addressBean);
 
-        InputStream inputStream = new InputStream() {
-            @Override
-            public int read() throws IOException {
-                return -1;
-            }
-        };
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
 
         UserBean userBean = new UserBean("yash","kakrecha","yash7890@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
 //        userBean.setType("admin");
@@ -224,12 +237,7 @@ class FrontControllerTest{
         ArrayList<AddressBean> addressList = new ArrayList<>();
         addressList.add(addressBean);
 
-        InputStream inputStream = new InputStream() {
-            @Override
-            public int read() throws IOException {
-                return -1;
-            }
-        };
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
 
         UserBean userBean = new UserBean("yash","kakrecha","yash7890@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
         userBean.setType("esbhbhs");
@@ -247,7 +255,7 @@ class FrontControllerTest{
 		mvc.perform(post("/loginServlet")
 						.param("email","fsdhj@gmail.com")
 						.param("password","fsdhj"))
-				.andExpect(forwardedUrl("index"));
+				.andExpect(forwardedUrl("indexView"));
 	}
 
 	@Test
@@ -308,12 +316,7 @@ class FrontControllerTest{
         ArrayList<AddressBean> addressList = new ArrayList<>();
         addressList.add(addressBean);
 
-        InputStream inputStream = new InputStream() {
-            @Override
-            public int read() throws IOException {
-                return -1;
-            }
-        };
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
 
         UserBean userBean = new UserBean("yash","kakrecha","yash789@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
         
@@ -415,7 +418,7 @@ class FrontControllerTest{
 						.param("que1","A")
 						.param("que2","B")
 						.param("que3","C"))
-			.andExpect(forwardedUrl("resetPassword"));
+			.andExpect(forwardedUrl("resetPasswordView"));
 	}
 
 	@Test
@@ -450,12 +453,7 @@ class FrontControllerTest{
         ArrayList<AddressBean> addressList = new ArrayList<>();
         addressList.add(addressBean);
 
-        InputStream inputStream = new InputStream() {
-            @Override
-            public int read() throws IOException {
-                return -1;
-            }
-        };
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
 
         UserBean userBean = new UserBean("yash","kakrecha","yash7890@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
 		
@@ -483,12 +481,7 @@ class FrontControllerTest{
         ArrayList<AddressBean> addressList = new ArrayList<>();
         addressList.add(addressBean);
 
-        InputStream inputStream = new InputStream() {
-            @Override
-            public int read() throws IOException {
-                return -1;
-            }
-        };
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
 
         UserBean userBean = new UserBean("yash","kakrecha","yash7890@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
 		userBean.setType("user");
@@ -518,12 +511,7 @@ class FrontControllerTest{
         ArrayList<AddressBean> addressList = new ArrayList<>();
         addressList.add(addressBean);
 
-        InputStream inputStream = new InputStream() {
-            @Override
-            public int read() throws IOException {
-                return -1;
-            }
-        };
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
 
         UserBean userBean = new UserBean("yash","kakrecha","yash7890@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
 		userBean.setType("admin");
@@ -553,12 +541,7 @@ class FrontControllerTest{
         ArrayList<AddressBean> addressList = new ArrayList<>();
         addressList.add(addressBean);
 
-        InputStream inputStream = new InputStream() {
-            @Override
-            public int read() throws IOException {
-                return -1;
-            }
-        };
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
 
         UserBean userBean = new UserBean("yash","kakrecha","yash7890@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
 		userBean.setType("ueje");
@@ -583,19 +566,24 @@ class FrontControllerTest{
 		
 		MockMultipartFile mockfilein = new MockMultipartFile("profilepic", "bg.jpg", "multipart/form-data",filein);
 				
-		AddressBean addressBean = new AddressBean("ABC","ahmedabad","gujrat","india","132456");
-
+		AddressBean addressBean = new AddressBean();
+		
+		addressBean.setHome("ABC");
+		addressBean.setCity("ahmedabad");
+		addressBean.setState("gujrat");
+		addressBean.setCountry("india");
+		addressBean.setPincode("132456");
+		addressBean.getAid();
+		addressBean.getUser();
+		
         ArrayList<AddressBean> addressList = new ArrayList<>();
         addressList.add(addressBean);
 
-        InputStream inputStream = new InputStream() {
-            @Override
-            public int read() throws IOException {
-                return -1;
-            }
-        };
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
 
         UserBean userBean = new UserBean("yash","kakrecha","yash7890@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
+        userBean.setUid(5);
+        userBean.getBase64Image();
 //		userBean.setType("ueje");
         
         when(userService.checkEmail(userBean.getEmail())).thenReturn(true);
@@ -622,12 +610,7 @@ class FrontControllerTest{
         ArrayList<AddressBean> addressList = new ArrayList<>();
         addressList.add(addressBean);
 
-        InputStream inputStream = new InputStream() {
-            @Override
-            public int read() throws IOException {
-                return -1;
-            }
-        };
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
 
         UserBean userBean = new UserBean("yash","kakrecha","yash7890@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
 		
@@ -652,12 +635,7 @@ class FrontControllerTest{
         ArrayList<AddressBean> addressList = new ArrayList<>();
         addressList.add(addressBean);
 
-        InputStream inputStream = new InputStream() {
-            @Override
-            public int read() throws IOException {
-                return -1;
-            }
-        };
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
 
         UserBean userBean = new UserBean("yash","kakrecha","",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
 		
@@ -683,12 +661,7 @@ class FrontControllerTest{
         ArrayList<AddressBean> addressList = new ArrayList<>();
 //        addressList.add(addressBean);
 
-        InputStream inputStream = new InputStream() {
-            @Override
-            public int read() throws IOException {
-                return -1;
-            }
-        };
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
 
         UserBean userBean = new UserBean("yash","kakrecha","yash7890@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
 		userBean.setType("user");
@@ -703,7 +676,7 @@ class FrontControllerTest{
 						.sessionAttr("user", userBean)
 						.param("password1","fsdhj")
 						.param("password2","fsdhj"))
-			.andExpect(forwardedUrl("register"));
+			.andExpect(forwardedUrl("registerView"));
 	}
 
 	@Test
@@ -718,12 +691,7 @@ class FrontControllerTest{
         ArrayList<AddressBean> addressList = new ArrayList<>();
         addressList.add(addressBean);
 
-        InputStream inputStream = new InputStream() {
-            @Override
-            public int read() throws IOException {
-                return -1;
-            }
-        };
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
 
         UserBean userBean = new UserBean("yash","kakrecha","yash7890@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
 		userBean.setType("user");
@@ -738,7 +706,502 @@ class FrontControllerTest{
 						.sessionAttr("user", userBean)
 						.param("password1","fsdhj")
 						.param("password2","fsdhj"))
-			.andExpect(forwardedUrl("register"));
+			.andExpect(forwardedUrl("registerView"));
+	}
+	
+	@Test
+	void testRegisterServlet11() throws Exception {
+		
+		FileInputStream filein = new FileInputStream(new File("C:\\Users\\Yash\\Downloads\\bg.jpg"));
+		
+		MockMultipartFile mockfilein = new MockMultipartFile("profilepic", "bg.jpg", "multipart/form-data",filein);
+				
+		AddressBean addressBean = new AddressBean("ABC","ahmedabad","gujrat","india","132456");
+
+        ArrayList<AddressBean> addressList = new ArrayList<>();
+        addressList.add(addressBean);
+
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
+
+        UserBean userBean = new UserBean("yash","kakrecha","yash7890@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
+		userBean.setType("user");
+		userBean.setFname("fcgvhbjnkmweldfknvbgnhjmeskdjsjkknsknknfcgvhbjnkmweldfknvbgnhjmeskdjsjkknsknkn");
+        
+        when(userService.checkEmail(userBean.getEmail())).thenReturn(true);
+		
+		mvc.perform(MockMvcRequestBuilders.fileUpload("/registerServlet")
+						.file(mockfilein)
+						.contentType(MediaType.MULTIPART_FORM_DATA)
+						.accept(MediaType.MULTIPART_FORM_DATA)
+						.flashAttr("userBean", userBean)
+						.sessionAttr("user", userBean)
+						.param("password1","fsdhj")
+						.param("password2","fsdhj"))
+			.andExpect(forwardedUrl("registerView"));
+	}
+	
+	@Test
+	void testRegisterServlet12() throws Exception {
+		
+		FileInputStream filein = new FileInputStream(new File("C:\\Users\\Yash\\Downloads\\bg.jpg"));
+		
+		MockMultipartFile mockfilein = new MockMultipartFile("profilepic", "bg.jpg", "multipart/form-data",filein);
+				
+		AddressBean addressBean = new AddressBean("ABC","ahmedabad","gujrat","india","132456");
+
+        ArrayList<AddressBean> addressList = new ArrayList<>();
+        addressList.add(addressBean);
+
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
+
+        UserBean userBean = new UserBean("yash","kakrecha","yash7890@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
+		userBean.setType("user");
+		userBean.setLname("fcgvhbjnkmweldfknvbgnhjmeskdjsjkknsknknfcgvhbjnkmweldfknvbgnhjmeskdjsjkknsknkn");
+        
+        when(userService.checkEmail(userBean.getEmail())).thenReturn(true);
+		
+		mvc.perform(MockMvcRequestBuilders.fileUpload("/registerServlet")
+						.file(mockfilein)
+						.contentType(MediaType.MULTIPART_FORM_DATA)
+						.accept(MediaType.MULTIPART_FORM_DATA)
+						.flashAttr("userBean", userBean)
+						.sessionAttr("user", userBean)
+						.param("password1","fsdhj")
+						.param("password2","fsdhj"))
+			.andExpect(forwardedUrl("registerView"));
+	}
+	
+	@Test
+	void testRegisterServlet13() throws Exception {
+		
+		FileInputStream filein = new FileInputStream(new File("C:\\Users\\Yash\\Downloads\\bg.jpg"));
+		
+		MockMultipartFile mockfilein = new MockMultipartFile("profilepic", "bg.jpg", "multipart/form-data",filein);
+				
+		AddressBean addressBean = new AddressBean("ABC","ahmedabad","gujrat","india","132456");
+
+        ArrayList<AddressBean> addressList = new ArrayList<>();
+        addressList.add(addressBean);
+
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
+
+        UserBean userBean = new UserBean("yash","kakrecha","yash7890@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
+		userBean.setType("user");
+		userBean.setEmail("fcgvhbjnkmweldfknvbgnhjme@skdjsjkknsknknfcgvhbjnkmweldfknv.bgnhjmeskdjsjkknsknkn");
+        
+        when(userService.checkEmail(userBean.getEmail())).thenReturn(true);
+		
+		mvc.perform(MockMvcRequestBuilders.fileUpload("/registerServlet")
+						.file(mockfilein)
+						.contentType(MediaType.MULTIPART_FORM_DATA)
+						.accept(MediaType.MULTIPART_FORM_DATA)
+						.flashAttr("userBean", userBean)
+						.sessionAttr("user", userBean)
+						.param("password1","fsdhj")
+						.param("password2","fsdhj"))
+			.andExpect(forwardedUrl("registerView"));
+	}
+	
+	@Test
+	void testRegisterServlet14() throws Exception {
+		
+		FileInputStream filein = new FileInputStream(new File("C:\\Users\\Yash\\Downloads\\bg.jpg"));
+		
+		MockMultipartFile mockfilein = new MockMultipartFile("profilepic", "bg.jpg", "multipart/form-data",filein);
+				
+		AddressBean addressBean = new AddressBean("ABC","ahmedabad","gujrat","india","132456");
+
+        ArrayList<AddressBean> addressList = new ArrayList<>();
+        addressList.add(addressBean);
+
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
+
+        UserBean userBean = new UserBean("yash","kakrecha","yash7890@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
+		userBean.setType("user");
+		userBean.setPhone(0);
+        
+        when(userService.checkEmail(userBean.getEmail())).thenReturn(true);
+		
+		mvc.perform(MockMvcRequestBuilders.fileUpload("/registerServlet")
+						.file(mockfilein)
+						.contentType(MediaType.MULTIPART_FORM_DATA)
+						.accept(MediaType.MULTIPART_FORM_DATA)
+						.flashAttr("userBean", userBean)
+						.sessionAttr("user", userBean)
+						.param("password1","fsdhj")
+						.param("password2","fsdhj"))
+			.andExpect(forwardedUrl("registerView"));
+	}
+	
+	@Test
+	void testRegisterServlet15() throws Exception {
+		
+		FileInputStream filein = new FileInputStream(new File("C:\\Users\\Yash\\Downloads\\bg.jpg"));
+		
+		MockMultipartFile mockfilein = new MockMultipartFile("profilepic", "bg.jpg", "multipart/form-data",filein);
+				
+		AddressBean addressBean = new AddressBean("ABC","ahmedabad","gujrat","india","132456");
+
+        ArrayList<AddressBean> addressList = new ArrayList<>();
+        addressList.add(addressBean);
+
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
+
+        UserBean userBean = new UserBean("yash","kakrecha","yash7890@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
+		userBean.setType("user");
+		userBean.setGender("fcgvhbjnkmweldfknvbgnh");
+        
+        when(userService.checkEmail(userBean.getEmail())).thenReturn(true);
+		
+		mvc.perform(MockMvcRequestBuilders.fileUpload("/registerServlet")
+						.file(mockfilein)
+						.contentType(MediaType.MULTIPART_FORM_DATA)
+						.accept(MediaType.MULTIPART_FORM_DATA)
+						.flashAttr("userBean", userBean)
+						.sessionAttr("user", userBean)
+						.param("password1","fsdhj")
+						.param("password2","fsdhj"))
+			.andExpect(forwardedUrl("registerView"));
+	}
+	
+	@Test
+	void testRegisterServlet16() throws Exception {
+		
+		FileInputStream filein = new FileInputStream(new File("C:\\Users\\Yash\\Downloads\\bg.jpg"));
+		
+		MockMultipartFile mockfilein = new MockMultipartFile("profilepic", "bg.jpg", "multipart/form-data",filein);
+				
+		AddressBean addressBean = new AddressBean("ABC","ahmedabad","gujrat","india","132456");
+
+        ArrayList<AddressBean> addressList = new ArrayList<>();
+        addressList.add(addressBean);
+
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
+
+        UserBean userBean = new UserBean("yash","kakrecha","yash7890@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
+		userBean.setType("user");
+		userBean.setBirthdate("fcgvhbjnkmweldfknvbgnhjmeskdjsjkknsknknfcgvhbjnkmweldfknvbgnhjmeskdjsjkknsknkn");
+        
+        when(userService.checkEmail(userBean.getEmail())).thenReturn(true);
+		
+		mvc.perform(MockMvcRequestBuilders.fileUpload("/registerServlet")
+						.file(mockfilein)
+						.contentType(MediaType.MULTIPART_FORM_DATA)
+						.accept(MediaType.MULTIPART_FORM_DATA)
+						.flashAttr("userBean", userBean)
+						.sessionAttr("user", userBean)
+						.param("password1","fsdhj")
+						.param("password2","fsdhj"))
+			.andExpect(forwardedUrl("registerView"));
+	}
+	
+	@Test
+	void testRegisterServlet17() throws Exception {
+		
+		FileInputStream filein = new FileInputStream(new File("C:\\Users\\Yash\\Downloads\\bg.jpg"));
+		
+		MockMultipartFile mockfilein = new MockMultipartFile("profilepic", "bg.jpg", "multipart/form-data",filein);
+				
+		AddressBean addressBean = new AddressBean("ABC","ahmedabad","gujrat","india","132456");
+
+        ArrayList<AddressBean> addressList = new ArrayList<>();
+        addressList.add(addressBean);
+
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
+
+        UserBean userBean = new UserBean("yash","kakrecha","yash7890@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
+		userBean.setType("user");
+		userBean.setHobby("fcgvhbjnkmweldfknvbgnhjmeskdjsjkknsknknfcgvhbjnkmweldfknvbgnhjmeskdjsjkknsknkn");
+        
+        when(userService.checkEmail(userBean.getEmail())).thenReturn(true);
+		
+		mvc.perform(MockMvcRequestBuilders.fileUpload("/registerServlet")
+						.file(mockfilein)
+						.contentType(MediaType.MULTIPART_FORM_DATA)
+						.accept(MediaType.MULTIPART_FORM_DATA)
+						.flashAttr("userBean", userBean)
+						.sessionAttr("user", userBean)
+						.param("password1","fsdhj")
+						.param("password2","fsdhj"))
+			.andExpect(forwardedUrl("registerView"));
+	}
+	
+	@Test
+	void testRegisterServlet18() throws Exception {
+		
+		FileInputStream filein = new FileInputStream(new File("C:\\Users\\Yash\\Downloads\\bg.jpg"));
+		
+		MockMultipartFile mockfilein = new MockMultipartFile("profilepic", "bg.jpg", "multipart/form-data",filein);
+				
+		AddressBean addressBean = new AddressBean("ABC","ahmedabad","gujrat","india","132456");
+
+        ArrayList<AddressBean> addressList = new ArrayList<>();
+        addressList.add(addressBean);
+
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
+
+        UserBean userBean = new UserBean("yash","kakrecha","yash7890@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
+		userBean.setType("user");
+		userBean.setQue1("fcgvhbjnkmweldfknvbgnhjmeskdjsjkknsknknfcgvhbjnkmweldfknvbgnhjmeskdjsjkknsknkn");
+        
+        when(userService.checkEmail(userBean.getEmail())).thenReturn(true);
+		
+		mvc.perform(MockMvcRequestBuilders.fileUpload("/registerServlet")
+						.file(mockfilein)
+						.contentType(MediaType.MULTIPART_FORM_DATA)
+						.accept(MediaType.MULTIPART_FORM_DATA)
+						.flashAttr("userBean", userBean)
+						.sessionAttr("user", userBean)
+						.param("password1","fsdhj")
+						.param("password2","fsdhj"))
+			.andExpect(forwardedUrl("registerView"));
+	}
+	
+	@Test
+	void testRegisterServlet19() throws Exception {
+		
+		FileInputStream filein = new FileInputStream(new File("C:\\Users\\Yash\\Downloads\\bg.jpg"));
+		
+		MockMultipartFile mockfilein = new MockMultipartFile("profilepic", "bg.jpg", "multipart/form-data",filein);
+				
+		AddressBean addressBean = new AddressBean("ABC","ahmedabad","gujrat","india","132456");
+
+        ArrayList<AddressBean> addressList = new ArrayList<>();
+        addressList.add(addressBean);
+
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
+
+        UserBean userBean = new UserBean("yash","kakrecha","yash7890@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
+		userBean.setType("user");
+		userBean.setQue2("fcgvhbjnkmweldfknvbgnhjmeskdjsjkknsknknfcgvhbjnkmweldfknvbgnhjmeskdjsjkknsknkn");
+        
+        when(userService.checkEmail(userBean.getEmail())).thenReturn(true);
+		
+		mvc.perform(MockMvcRequestBuilders.fileUpload("/registerServlet")
+						.file(mockfilein)
+						.contentType(MediaType.MULTIPART_FORM_DATA)
+						.accept(MediaType.MULTIPART_FORM_DATA)
+						.flashAttr("userBean", userBean)
+						.sessionAttr("user", userBean)
+						.param("password1","fsdhj")
+						.param("password2","fsdhj"))
+			.andExpect(forwardedUrl("registerView"));
+	}
+	
+	@Test
+	void testRegisterServlet20() throws Exception {
+		
+		FileInputStream filein = new FileInputStream(new File("C:\\Users\\Yash\\Downloads\\bg.jpg"));
+		
+		MockMultipartFile mockfilein = new MockMultipartFile("profilepic", "bg.jpg", "multipart/form-data",filein);
+				
+		AddressBean addressBean = new AddressBean("ABC","ahmedabad","gujrat","india","132456");
+
+        ArrayList<AddressBean> addressList = new ArrayList<>();
+        addressList.add(addressBean);
+
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
+
+        UserBean userBean = new UserBean("yash","kakrecha","yash7890@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
+		userBean.setType("user");
+		userBean.setQue3("fcgvhbjnkmweldfknvbgnhjmeskdjsjkknsknknfcgvhbjnkmweldfknvbgnhjmeskdjsjkknsknkn");
+        
+        when(userService.checkEmail(userBean.getEmail())).thenReturn(true);
+		
+		mvc.perform(MockMvcRequestBuilders.fileUpload("/registerServlet")
+						.file(mockfilein)
+						.contentType(MediaType.MULTIPART_FORM_DATA)
+						.accept(MediaType.MULTIPART_FORM_DATA)
+						.flashAttr("userBean", userBean)
+						.sessionAttr("user", userBean)
+						.param("password1","fsdhj")
+						.param("password2","fsdhj"))
+			.andExpect(forwardedUrl("registerView"));
+	}
+	
+	@Test
+	void testRegisterServlet21() throws Exception {
+		
+		FileInputStream filein = new FileInputStream(new File("C:\\Users\\Yash\\Downloads\\bg.jpg"));
+		
+		MockMultipartFile mockfilein = new MockMultipartFile("profilepic", "bg.jpg", "multipart/form-data",filein);
+				
+//		AddressBean addressBean = new AddressBean("ABC","ahmedabad","gujrat","india","132456");
+//
+        ArrayList<AddressBean> addressList = new ArrayList<>();
+//        addressList.add(addressBean);
+
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
+
+        UserBean userBean = new UserBean("yash","kakrecha","yash7890@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
+		userBean.setType("user");
+        
+        when(userService.checkEmail(userBean.getEmail())).thenReturn(true);
+		
+		mvc.perform(MockMvcRequestBuilders.fileUpload("/registerServlet")
+						.file(mockfilein)
+						.contentType(MediaType.MULTIPART_FORM_DATA)
+						.accept(MediaType.MULTIPART_FORM_DATA)
+						.flashAttr("userBean", userBean)
+						.sessionAttr("user", userBean)
+						.param("password1","fsdhj")
+						.param("password2","fsdhj"))
+			.andExpect(forwardedUrl("registerView"));
+	}
+	
+	@Test
+	void testRegisterServlet22() throws Exception {
+		
+		FileInputStream filein = new FileInputStream(new File("C:\\Users\\Yash\\Downloads\\bg.jpg"));
+		
+		MockMultipartFile mockfilein = new MockMultipartFile("profilepic", "bg.jpg", "multipart/form-data",filein);
+				
+		AddressBean addressBean = new AddressBean("ABC","ahmedabad","gujrat","india","132456");
+		addressBean.setHome("fcgvhbjnkmweldfknvbgnhjmeskdjsjkknsknknfcgvhbjnkmweldfknvbgnhjmeskdjsjkknsknkn");
+        
+        ArrayList<AddressBean> addressList = new ArrayList<>();
+        addressList.add(addressBean);
+
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
+
+        UserBean userBean = new UserBean("yash","kakrecha","yash7890@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
+		userBean.setType("user");
+		
+        when(userService.checkEmail(userBean.getEmail())).thenReturn(true);
+		
+		mvc.perform(MockMvcRequestBuilders.fileUpload("/registerServlet")
+						.file(mockfilein)
+						.contentType(MediaType.MULTIPART_FORM_DATA)
+						.accept(MediaType.MULTIPART_FORM_DATA)
+						.flashAttr("userBean", userBean)
+						.sessionAttr("user", userBean)
+						.param("password1","fsdhj")
+						.param("password2","fsdhj"))
+			.andExpect(forwardedUrl("registerView"));
+	}
+	
+	@Test
+	void testRegisterServlet23() throws Exception {
+		
+		FileInputStream filein = new FileInputStream(new File("C:\\Users\\Yash\\Downloads\\bg.jpg"));
+		
+		MockMultipartFile mockfilein = new MockMultipartFile("profilepic", "bg.jpg", "multipart/form-data",filein);
+				
+		AddressBean addressBean = new AddressBean("ABC","ahmedabad","gujrat","india","132456");
+		addressBean.setCity("fcgvhbjnkmweldfknvbgnhjmeskdjsjkknsknknfcgvhbjnkmweldfknvbgnhjmeskdjsjkknsknkn");
+        
+        ArrayList<AddressBean> addressList = new ArrayList<>();
+        addressList.add(addressBean);
+
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
+
+        UserBean userBean = new UserBean("yash","kakrecha","yash7890@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
+		userBean.setType("user");
+		
+        when(userService.checkEmail(userBean.getEmail())).thenReturn(true);
+		
+		mvc.perform(MockMvcRequestBuilders.fileUpload("/registerServlet")
+						.file(mockfilein)
+						.contentType(MediaType.MULTIPART_FORM_DATA)
+						.accept(MediaType.MULTIPART_FORM_DATA)
+						.flashAttr("userBean", userBean)
+						.sessionAttr("user", userBean)
+						.param("password1","fsdhj")
+						.param("password2","fsdhj"))
+			.andExpect(forwardedUrl("registerView"));
+	}
+	
+	@Test
+	void testRegisterServlet24() throws Exception {
+		
+		FileInputStream filein = new FileInputStream(new File("C:\\Users\\Yash\\Downloads\\bg.jpg"));
+		
+		MockMultipartFile mockfilein = new MockMultipartFile("profilepic", "bg.jpg", "multipart/form-data",filein);
+				
+		AddressBean addressBean = new AddressBean("ABC","ahmedabad","gujrat","india","132456");
+		addressBean.setState("fcgvhbjnkmweldfknvbgnhjmeskdjsjkknsknknfcgvhbjnkmweldfknvbgnhjmeskdjsjkknsknkn");
+        
+        ArrayList<AddressBean> addressList = new ArrayList<>();
+        addressList.add(addressBean);
+
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
+
+        UserBean userBean = new UserBean("yash","kakrecha","yash7890@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
+		userBean.setType("user");
+		
+        when(userService.checkEmail(userBean.getEmail())).thenReturn(true);
+		
+		mvc.perform(MockMvcRequestBuilders.fileUpload("/registerServlet")
+						.file(mockfilein)
+						.contentType(MediaType.MULTIPART_FORM_DATA)
+						.accept(MediaType.MULTIPART_FORM_DATA)
+						.flashAttr("userBean", userBean)
+						.sessionAttr("user", userBean)
+						.param("password1","fsdhj")
+						.param("password2","fsdhj"))
+			.andExpect(forwardedUrl("registerView"));
+	}
+	
+	@Test
+	void testRegisterServlet25() throws Exception {
+		
+		FileInputStream filein = new FileInputStream(new File("C:\\Users\\Yash\\Downloads\\bg.jpg"));
+		
+		MockMultipartFile mockfilein = new MockMultipartFile("profilepic", "bg.jpg", "multipart/form-data",filein);
+				
+		AddressBean addressBean = new AddressBean("ABC","ahmedabad","gujrat","india","132456");
+		addressBean.setCountry("fcgvhbjnkmweldfknvbgnhjmeskdjsjkknsknknfcgvhbjnkmweldfknvbgnhjmeskdjsjkknsknkn");
+        
+        ArrayList<AddressBean> addressList = new ArrayList<>();
+        addressList.add(addressBean);
+
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
+
+        UserBean userBean = new UserBean("yash","kakrecha","yash7890@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
+		userBean.setType("user");
+		
+        when(userService.checkEmail(userBean.getEmail())).thenReturn(true);
+		
+		mvc.perform(MockMvcRequestBuilders.fileUpload("/registerServlet")
+						.file(mockfilein)
+						.contentType(MediaType.MULTIPART_FORM_DATA)
+						.accept(MediaType.MULTIPART_FORM_DATA)
+						.flashAttr("userBean", userBean)
+						.sessionAttr("user", userBean)
+						.param("password1","fsdhj")
+						.param("password2","fsdhj"))
+			.andExpect(forwardedUrl("registerView"));
+	}
+	
+	@Test
+	void testRegisterServlet26() throws Exception {
+		
+		FileInputStream filein = new FileInputStream(new File("C:\\Users\\Yash\\Downloads\\bg.jpg"));
+		
+		MockMultipartFile mockfilein = new MockMultipartFile("profilepic", "bg.jpg", "multipart/form-data",filein);
+				
+		AddressBean addressBean = new AddressBean("ABC","ahmedabad","gujrat","india","132456");
+		addressBean.setPincode("fcgvhbjnkmweldfknvbgnhjmeskdjsjkknsknknfcgvhbjnkmweldfknvbgnhjmeskdjsjkknsknkn");
+        
+        ArrayList<AddressBean> addressList = new ArrayList<>();
+        addressList.add(addressBean);
+
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
+
+        UserBean userBean = new UserBean("yash","kakrecha","yash7890@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
+		userBean.setType("user");
+		
+        when(userService.checkEmail(userBean.getEmail())).thenReturn(true);
+		
+		mvc.perform(MockMvcRequestBuilders.fileUpload("/registerServlet")
+						.file(mockfilein)
+						.contentType(MediaType.MULTIPART_FORM_DATA)
+						.accept(MediaType.MULTIPART_FORM_DATA)
+						.flashAttr("userBean", userBean)
+						.sessionAttr("user", userBean)
+						.param("password1","fsdhj")
+						.param("password2","fsdhj"))
+			.andExpect(forwardedUrl("registerView"));
 	}
 	
 	@Test
@@ -752,12 +1215,7 @@ class FrontControllerTest{
         ArrayList<AddressBean> addressList = new ArrayList<>();
 //        addressList.add(addressBean);
 
-        InputStream inputStream = new InputStream() {
-            @Override
-            public int read() throws IOException {
-                return -1;
-            }
-        };
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
 
         UserBean userBean = new UserBean("yash","kakrecha","yash7890@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
         
@@ -784,12 +1242,7 @@ class FrontControllerTest{
         ArrayList<AddressBean> addressList = new ArrayList<>();
         addressList.add(addressBean);
 
-        InputStream inputStream = new InputStream() {
-            @Override
-            public int read() throws IOException {
-                return -1;
-            }
-        };
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
 
         UserBean userBean = new UserBean("yash","kakrecha","yash7890@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
         
@@ -816,12 +1269,7 @@ class FrontControllerTest{
         ArrayList<AddressBean> addressList = new ArrayList<>();
         addressList.add(addressBean);
 
-        InputStream inputStream = new InputStream() {
-            @Override
-            public int read() throws IOException {
-                return -1;
-            }
-        };
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
 
         UserBean userBean = new UserBean("yash","kakrecha","yash7890@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
         
@@ -848,12 +1296,7 @@ class FrontControllerTest{
         ArrayList<AddressBean> addressList = new ArrayList<>();
         addressList.add(addressBean);
 
-        InputStream inputStream = new InputStream() {
-            @Override
-            public int read() throws IOException {
-                return -1;
-            }
-        };
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
 
         UserBean userBean = new UserBean("yash","kakrecha","yash7890@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
         
@@ -879,12 +1322,7 @@ class FrontControllerTest{
         ArrayList<AddressBean> addressList = new ArrayList<>();
         addressList.add(addressBean);
 
-        InputStream inputStream = new InputStream() {
-            @Override
-            public int read() throws IOException {
-                return -1;
-            }
-        };
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
 
         UserBean userBean = new UserBean("yash","kakrecha","yash7890@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
              

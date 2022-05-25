@@ -40,7 +40,7 @@ public class FrontController {
 	
 	@RequestMapping({"/","/index"})
 	public String index() {
-		return "index";
+		return "indexView";
 	}
 	
 	@RequestMapping("/homepage")
@@ -56,32 +56,32 @@ public class FrontController {
 //        	return "index";
 //        }
         
-		return "homepage";
+		return "homepageView";
 	}
 	
 	@RequestMapping("/register")
 	public String register() {
-		return "register";
+		return "registerView";
 	}
 	
 	@RequestMapping("/resetPassword")
 	public String resetPassword() {
-		return "resetPassword";
+		return "resetPasswordView";
 	}
 
 	@RequestMapping("/temp")
 	public String temp() {
-		return "temp";
+		return "tempView";
 	}
 	
 	@RequestMapping("/newPassword")
 	public String newPassword(@RequestParam String email,Model model) {
 		if(email==null || email.equals("")) {
 			model.addAttribute("error", "No user found");
-			return "resetPassword";
+			return "resetPasswordView";
 		}else {
 			model.addAttribute("email", email);
-			return "newPassword";
+			return "newPasswordView";
 		}
 	}
 	
@@ -126,7 +126,7 @@ public class FrontController {
 			
 			LOG.info("No user found with given email and password, redirecting to login page.");
 			model.addAttribute("errormsg","No user found.");
-			return "index";
+			return "indexView";
 		}
 	}
 	
@@ -157,7 +157,7 @@ public class FrontController {
 		}
 		
 		LOG.debug("Redirecting to login page.");
-		return "index";
+		return "indexView";
 		
 	}
 	
@@ -214,7 +214,7 @@ public class FrontController {
 	        return model;
 		}else {
 			LOG.debug("Session is null, redirecting to login page.");
-			ModelAndView model = new ModelAndView("index");
+			ModelAndView model = new ModelAndView("indexView");
 			return model;
 		}
 	}
@@ -229,7 +229,7 @@ public class FrontController {
 		LOG.debug("Inside New Password Servlet.");
 		
 		if(password1==null || password2==null || password1.equals("") || password2.equals("")) {
-			return "resetPassword";
+			return "resetPasswordView";
 		}else {
 			if(password1.equals(password2)) {
 				
@@ -238,12 +238,12 @@ public class FrontController {
 				us.resetPass(email, password1);
 				
 				LOG.debug("Redirecting to login page.");
-				return "index";
+				return "indexView";
 			}else {
 				LOG.debug("Password not matched, redirecting to new password page.");
 				model.addAttribute("email", email);
 				model.addAttribute("error", "Password not matched");
-				return "newPassword";
+				return "newPasswordView";
 			}
 		}
 	}
@@ -266,7 +266,7 @@ public class FrontController {
 			return model;
 		}else {
 			LOG.debug("No user found, redirecting to reset password page.");
-			ModelAndView model = new ModelAndView("resetPassword");
+			ModelAndView model = new ModelAndView("resetPasswordView");
 			model.addObject("error", "No user found");
 			return model;
 		}
@@ -295,7 +295,7 @@ public class FrontController {
 				errors.add(f.getDefaultMessage());
 			}
 			model.addAttribute("validerror",errors);
-			return "register";
+			return "registerView";
 		}else {
 			
 			LOG.debug("User validated.");
@@ -320,7 +320,7 @@ public class FrontController {
 				model.addAttribute("failuser",user);
 				model.addAttribute("errormsg","Image is empty.");
 				
-				return "register";
+				return "registerView";
 				
 			}else if(!Validation.validate(user)) {
 				
@@ -328,7 +328,7 @@ public class FrontController {
 				model.addAttribute("failuser",user);
 				model.addAttribute("errormsg","Input Field is empty or too large or type mismatch.");
 				
-				return "register";
+				return "registerView";
 				
 			}else if(!password1.equals(password2)) {
 				
@@ -336,7 +336,7 @@ public class FrontController {
 				model.addAttribute("failuser",user);
 				model.addAttribute("errormsg","Password not matched.");
 				
-				return "register";
+				return "registerView";
 				
 			}else if(!us.checkEmail(user.getEmail())) {
 				
@@ -344,7 +344,7 @@ public class FrontController {
 				model.addAttribute("failuser",user);
 				model.addAttribute("errormsg","Email already exist.");
 				
-				return "register";
+				return "registerView";
 				
 			}else {	
 				

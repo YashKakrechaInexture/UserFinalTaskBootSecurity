@@ -42,34 +42,34 @@ public class Validation {
 		
 		LOG.debug("Inside Validation class.");
 		
-		if(fname==null || fname.equals("") || fname.length()>255) {
+		if(fname==null || fname.equals("") || fname.length()>50) {
 			LOG.debug("Validation failed for fname.");
 			return false;
-		}else if(lname==null || lname.equals("") || lname.length()>255) {
+		}else if(lname==null || lname.equals("") || lname.length()>50) {
 			LOG.debug("Validation failed for lname.");
 			return false;
-		}else if(email==null || email.equals("") || email.length()>255) {
+		}else if(email==null || email.equals("") || email.length()>50) {
 			LOG.debug("Validation failed for email.");
 			return false;
 		}else if(phone == 0) {
 			LOG.debug("Validation failed for phone.");
 			return false;
-		}else if(gender==null || gender.equals("") || gender.length()>255) {
+		}else if(gender==null || gender.equals("") || gender.length()>10) {
 			LOG.debug("Validation failed for gender.");
 			return false;
-		}else if(birthdate==null || birthdate.equals("") || birthdate.length()>255) {
+		}else if(birthdate==null || birthdate.equals("") || birthdate.length()>50) {
 			LOG.debug("Validation failed for birthdate.");
 			return false;
-		}else if(hobby==null || hobby.equals("") || hobby.length()>255) {
+		}else if(hobby==null || hobby.equals("") || hobby.length()>50) {
 			LOG.debug("Validation failed for hobby.");
 			return false;
-		}else if(que1==null || que1.equals("") || que1.length()>255) {
+		}else if(que1==null || que1.equals("") || que1.length()>50) {
 			LOG.debug("Validation failed for que1.");
 			return false;
-		}else if(que2==null || que2.equals("") || que2.length()>255) {
+		}else if(que2==null || que2.equals("") || que2.length()>50) {
 			LOG.debug("Validation failed for que2.");
 			return false;
-		}else if(que3==null || que3.equals("") || que3.length()>255) {
+		}else if(que3==null || que3.equals("") || que3.length()>50) {
 			LOG.debug("Validation failed for que3.");
 			return false;
 		}else if(address==null || address.size()<1) {
@@ -85,19 +85,19 @@ public class Validation {
 				String country = a.getCountry();
 				String pincode = a.getPincode();
 				
-				if(home==null || home.equals("") || home.length()>255) {
+				if(home==null || home.equals("") || home.length()>50) {
 					LOG.debug("Validation failed for home.");
 					return false;
-				}else if(city==null || city.equals("") || city.length()>255) {
+				}else if(city==null || city.equals("") || city.length()>50) {
 					LOG.debug("Validation failed for city.");
 					return false;
-				}else if(state==null || state.equals("") || state.length()>255) {
+				}else if(state==null || state.equals("") || state.length()>50) {
 					LOG.debug("Validation failed for state.");
 					return false;
-				}else if(country==null || country.equals("") || country.length()>255) {
+				}else if(country==null || country.equals("") || country.length()>50) {
 					LOG.debug("Validation failed for country.");
 					return false;
-				}else if(pincode==null || pincode.equals("") || pincode.length()>255) {
+				}else if(pincode==null || pincode.equals("") || pincode.length()>50) {
 					LOG.debug("Validation failed for pincode.");
 					return false;
 				}

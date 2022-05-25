@@ -19,6 +19,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 //import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -58,7 +60,7 @@ class UserServiceTest {
     UserBean newUserBean;
     
     @BeforeEach
-    void setUp(){
+    void setUp() throws FileNotFoundException{
         this.userService = new UserService(dm,am);
 //        dm.save(userBean);
         AddressBean addressBean = new AddressBean("ABC","ahmedabad","gujrat","india","132456");
@@ -66,12 +68,7 @@ class UserServiceTest {
         ArrayList<AddressBean> addressList = new ArrayList<>();
         addressList.add(addressBean);
 
-        InputStream inputStream = new InputStream() {
-            @Override
-            public int read() throws IOException {
-                return -1;
-            }
-        };
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
 
         UserBean userBean = new UserBean("yash","kakrecha","yash7890@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
         
@@ -92,19 +89,14 @@ class UserServiceTest {
     }
 
     @Test
-    void updateUser1() {
+    void updateUser1() throws FileNotFoundException {
 
         AddressBean addressBean = new AddressBean("ABC","ahmedabad","gujrat","india","132456");
 
         ArrayList<AddressBean> addressList = new ArrayList<>();
         addressList.add(addressBean);
 
-        InputStream inputStream = new InputStream() {
-            @Override
-            public int read() throws IOException {
-                return -1;
-            }
-        };
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
 
         UserBean userBean = new UserBean("yash","kakrecha","yash789@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
         
@@ -118,19 +110,14 @@ class UserServiceTest {
     }
     
     @Test
-    void updateUser2() {
+    void updateUser2() throws FileNotFoundException {
 
         AddressBean addressBean = new AddressBean("ABC","ahmedabad","gujrat","india","132456");
 
         ArrayList<AddressBean> addressList = new ArrayList<>();
         addressList.add(addressBean);
 
-        InputStream inputStream = new InputStream() {
-            @Override
-            public int read() throws IOException {
-                return -1;
-            }
-        };
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
 
         UserBean userBean = new UserBean("yash","kakrecha","yash789@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
         
@@ -145,18 +132,13 @@ class UserServiceTest {
     }
 
     @Test
-    void registerUser1() {
+    void registerUser1() throws FileNotFoundException {
         AddressBean addressBean = new AddressBean("ABC","ahmedabad","gujrat","india","132456");
 
         ArrayList<AddressBean> addressList = new ArrayList<>();
         addressList.add(addressBean);
 
-        InputStream inputStream = new InputStream() {
-            @Override
-            public int read() throws IOException {
-                return -1;
-            }
-        };
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
 
         UserBean userBean = new UserBean("yash","kakrecha","yash789@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
         
@@ -167,19 +149,14 @@ class UserServiceTest {
     }
     
     @Test
-    void registerUser2() {
+    void registerUser2() throws FileNotFoundException {
     	    	
     	AddressBean addressBean = new AddressBean("ABC","ahmedabad","gujrat","india","132456");
 
         ArrayList<AddressBean> addressList = new ArrayList<>();
         addressList.add(addressBean);
 
-        InputStream inputStream = new InputStream() {
-            @Override
-            public int read() throws IOException {
-                return -1;
-            }
-        };
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
 
         UserBean userBean = new UserBean("yash","kakrecha","yash789@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
         
@@ -190,19 +167,14 @@ class UserServiceTest {
     }
     
     @Test
-    void resetPass1() {
+    void resetPass1() throws FileNotFoundException {
         
     	AddressBean addressBean = new AddressBean("ABC","ahmedabad","gujrat","india","132456");
 
         ArrayList<AddressBean> addressList = new ArrayList<>();
         addressList.add(addressBean);
 
-        InputStream inputStream = new InputStream() {
-            @Override
-            public int read() throws IOException {
-                return -1;
-            }
-        };
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
 
         UserBean userBean = new UserBean("yash","kakrecha","yash789@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
     	
@@ -242,19 +214,14 @@ class UserServiceTest {
     }
 
     @Test
-    void checkUser1() {
+    void checkUser1() throws FileNotFoundException {
     	
     	AddressBean addressBean = new AddressBean("ABC","ahmedabad","gujrat","india","132456");
 
         ArrayList<AddressBean> addressList = new ArrayList<>();
         addressList.add(addressBean);
 
-        InputStream inputStream = new InputStream() {
-            @Override
-            public int read() throws IOException {
-                return -1;
-            }
-        };
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
 
         UserBean userBean = new UserBean("yash","kakrecha","yash789@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
         
@@ -277,19 +244,14 @@ class UserServiceTest {
     }
 
     @Test
-    void editProfile1() {
+    void editProfile1() throws FileNotFoundException {
     	
     	AddressBean addressBean = new AddressBean("ABC","ahmedabad","gujrat","india","132456");
 
         ArrayList<AddressBean> addressList = new ArrayList<>();
         addressList.add(addressBean);
 
-        InputStream inputStream = new InputStream() {
-            @Override
-            public int read() throws IOException {
-                return -1;
-            }
-        };
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
 
         UserBean userBean = new UserBean("yash","kakrecha","yash789@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
     	
@@ -315,19 +277,14 @@ class UserServiceTest {
     }
     
     @Test
-    void editProfile3() {
+    void editProfile3() throws FileNotFoundException {
     	
     	AddressBean addressBean = new AddressBean("ABC","ahmedabad","gujrat","india","132456");
 
         ArrayList<AddressBean> addressList = new ArrayList<>();
         addressList.add(addressBean);
 
-        InputStream inputStream = new InputStream() {
-            @Override
-            public int read() throws IOException {
-                return -1;
-            }
-        };
+        InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
 
         UserBean userBean = new UserBean("yash","kakrecha","yash789@gmail.com",1234567890,"yash123","Male","2022-01-01","Movies","A","B","C",addressList,inputStream);
     	
@@ -358,13 +315,8 @@ class UserServiceTest {
     }
 
     @Test
-    void convertToBase64Image() {
-    	InputStream inputStream = new InputStream() {
-            @Override
-            public int read() throws IOException {
-                return -1;
-            }
-        };
+    void convertToBase64Image() throws FileNotFoundException {
+    	InputStream inputStream = new FileInputStream("C:\\Users\\Yash\\Downloads\\bg.jpg");
     	userService.convertToBase64Image(inputStream);
     }
 }
