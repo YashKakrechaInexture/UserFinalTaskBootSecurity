@@ -8,7 +8,7 @@ import java.security.NoSuchAlgorithmException;
 import org.apache.log4j.Logger;
 
 /**
- * This class has passwordEnccryption method which returns encrypted password. It accepts string password and
+ * This class has password Encryption method which returns encrypted password. It accepts string password and
  * returns SHA256 encrypted password.
  * @author Yash
  *
@@ -36,7 +36,7 @@ public class ShaEncryption {
 	 * This method converts string password to encrypted byte array in sha256 using message digest.
 	 * @param input - string password
 	 * @return byte[] - encrypted byte array of string password
-	 * @throws NoSuchAlgorithmException
+	 * @throws NoSuchAlgorithmException - throws No Such Algorithm Exception
 	 */
 	private static byte[] getSHA(String input) throws NoSuchAlgorithmException
     {

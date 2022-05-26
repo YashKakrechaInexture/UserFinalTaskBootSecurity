@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
- * User Bean stores the all of the information filled by user
+ * User Bean stores all the information filled by user
  * @author Yash
  *
  */
@@ -176,66 +176,10 @@ public class UserBean implements Serializable{
 		this.que1 = que1;
 		this.que2 = que2;
 		this.que3 = que3;
-		this.address = new ArrayList<AddressBean>(address);
+		this.address = new ArrayList<>(address);
 		this.inputStream = inputStream;
 	}
-	
-	/**
-	 * Constructor of User bean
-	 * @param email - Stores email of user
-	 */
-//	public UserBean(String email) {
-//		this.email = email;
-//	}
-	
-	/**
-	 * Constructor of User bean
-	 * @param email - Stores email of user
-	 * @param password - Stores password of user
-	 */
-//	public UserBean(String email,String password) {
-//		this.email = email;
-//		this.password = password;
-//	}
-	
-	/**
-	 * Constructor of User bean
-	 * @param uid - Store user id from user database table
-	 * @param fname - Stores first name of user
-	 * @param lname - Stores last name of user
-	 * @param email - Stores email of user
-	 * @param phone - Stores phone number of user
-	 * @param gender - Stores gender of user
-	 * @param birthdate - Stores birthdate of user
-	 * @param hobby - Stores hobbies of user 
-	 */
-//	public UserBean(int uid,String fname,String lname,String email,long phone,String gender,String birthdate,String hobby){
-//		this.uid = uid;
-//		this.fname = fname;
-//		this.lname = lname;
-//		this.email = email;
-//		this.phone = phone;
-//		this.gender = gender;
-//		this.birthdate = birthdate;
-//		this.hobby = hobby;
-//	}
-	
-	/**
-	 * Constructor of User bean
-	 * @param email - Stores email of user
-	 * @param birthdate - Stores birthdate of user
-	 * @param que1 - Stores security question1's answer of user
-	 * @param que2 - Stores security question2's answer of user
-	 * @param que3 - Stores security question3's answer of user
-	 */
-//	public UserBean(String email,String birthdate,String que1,String que2,String que3) {
-//		this.email = email;
-//		this.birthdate = birthdate;
-//		this.que1 = que1;
-//		this.que2 = que2;
-//		this.que3 = que3;
-//	}
-	
+
 	/** 
 	 * Setter method of user id of user bean
 	 * @param uid - Store user id from user database table

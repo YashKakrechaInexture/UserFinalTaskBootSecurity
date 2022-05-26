@@ -11,7 +11,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
-import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -25,8 +24,6 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 public class AddressBean implements Serializable{
-	
-	static final Logger LOG = Logger.getLogger(AddressBean.class);
 	
 	private static final long serialVersionUID = 1L;
 
@@ -62,9 +59,9 @@ public class AddressBean implements Serializable{
 	private String country;
 	
 	/**
-	 * Stores pincode of address. String because some countries have Alpha-numeric pincode. exa, Canada, Argentina, etc.
+	 * Stores pin code of address. String because some countries have Alpha-numeric pin code. exa, Canada, Argentina, etc.
 	 */
-	@NotEmpty(message = "Pincode is required.")
+	@NotEmpty(message = "Pin code is required.")
 	private String pincode;
 	
 	@ManyToOne
@@ -75,24 +72,6 @@ public class AddressBean implements Serializable{
 	
 	/**
 	 * Constructor of address bean
-	 * @param aid - Stores address id from database table
-	 * @param home - Stores home line of address
-	 * @param city - Stores city name of address
-	 * @param state - Stores state line of address
-	 * @param country - Stores country line of address
-	 * @param pincode - Stores pincode of address
-	 */
-//	public AddressBean(int aid,String home, String city, String state, String country, String pincode) {
-//		this.aid = aid;
-//		this.home = home;
-//		this.city = city;
-//		this.state = state;
-//		this.country = country;
-//		this.pincode = pincode;
-//	}
-	
-	/**
-	 * Counstructor of address bean
 	 * @param home - Stores home line of address
 	 * @param city - Stores city name of address
 	 * @param state - Stores state line of address

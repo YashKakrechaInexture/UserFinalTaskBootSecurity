@@ -13,14 +13,13 @@ import com.inexture.UserFinalTaskBoot.Beans.AddressBean;
  *
  */
 public interface AddressDaoInterface extends JpaRepository<AddressBean, Integer>{
-	
-	@Query("select aid from AddressBean where uid=?1")
-	List<Integer> getAids(int uid);
+
 	/**
 	 * It returns address id's array list attached with the given user id from database table.
 	 * @param uid - user id in table
 	 * @return List<Integer> - List of aid from address table
 	 */
-//	public List<Integer> getAids(final int uid);
+	@Query("select aid from AddressBean where uid=?1")
+	List<Integer> getAids(int uid);
 	
 }

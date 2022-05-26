@@ -1,7 +1,5 @@
 package com.inexture.UserFinalTaskBoot;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -10,11 +8,6 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
-
-//import com.inexture.UserFinalTaskBoot.Filters.AdminFilter;
-//import com.inexture.UserFinalTaskBoot.Filters.HomepageFilter;
-//import com.inexture.UserFinalTaskBoot.Filters.LoginFilter;
-//import com.inexture.UserFinalTaskBoot.Filters.UserFilter;
 
 @Configuration
 @Profile("profile1")

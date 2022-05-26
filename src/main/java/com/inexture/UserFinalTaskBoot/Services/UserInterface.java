@@ -18,13 +18,13 @@ public interface UserInterface {
 	 * @param type - type of user (admin,user)
 	 * @return arraylist - arraylist of the user bean object
 	 */
-	public List<UserBean> showUsers(String type);
+	List<UserBean> showUsers(String type);
 	
 	/**
 	 * It calls the register dao method and registers user in database table.
 	 * @param u - user bean object
 	 */
-	public void registerUser(UserBean u);
+	void registerUser(UserBean u);
 	
 	/**
 	 * It encrypts the password and calls the reset password method from dao and resets the 
@@ -32,20 +32,20 @@ public interface UserInterface {
 	 * @param email - email address of the user
 	 * @param password - password of user
 	 */
-	public void resetPass(String email,String password);
+	void resetPass(String email,String password);
 	
 	/**
-	 * It calls the update user, update image, update address method of dao and it updates the
+	 * It calls the update user, update image, update address method of dao, and it updates the
 	 * all the user data in the database table.
 	 * @param u - user bean object
 	 */
-	public void updateUser(UserBean u);
+	void updateUser(UserBean u);
 	
 	/**
-	 * It calls the delete user dao method and it delets the user based on given user id.
+	 * It calls to delete user dao method, and it deletes the user based on given user id.
 	 * @param uid - user id from database table
 	 */
-	public void deleteUser(int uid);
+	void deleteUser(int uid);
 	
 	/**
 	 * It checks the email and password exist in database table by calling dao method. It returns whatever returned by dao.
@@ -55,13 +55,13 @@ public interface UserInterface {
 	 * @return Userbean - user bean object<br>
 	 * 			null - if no users found
 	 */
-	public UserBean checkUser(String email,String password);
+	UserBean checkUser(String email,String password);
 	
 	/**
 	 * It gets the all the user data and address data from dao, based on given email
 	 * @param email - email address of user
 	 */
-	public UserBean editProfile(String email);
+	UserBean editProfile(String email);
 	
 	/**
 	 * It checks if email is already exist in the database table or not.
@@ -69,18 +69,22 @@ public interface UserInterface {
 	 * @return true - If no user found in mysql database table.<br>
 	 * 		   false - If user found in mysql database table.
 	 */
-	public boolean checkEmail(String email);
+	boolean checkEmail(String email);
 	
 	/**
 	 * It finds the user with given email, birthdate and security answers from dao for forgot password.
-	 * @param u - user bean object
+	 * @param email - email of the user
+	 * @param birthdate - birthdate of the user
+	 * @param ans1 - security ans1 of the user
+	 * @param ans2 - security ans2 of the user
+	 * @param ans3 - security ans3 of the user
 	 * @return uid - User id from table
 	 */
-	public int findUser(String email, String birthdate, String ans1, String ans2, String ans3);
+	int findUser(String email, String birthdate, String ans1, String ans2, String ans3);
 	
 	/**
 	 * This method converts input stream image to base64 image. It accepts UserBean object with input stream variable filled.
-	 * @param u - User Bean object
+	 * @param inputStream - input stream of image
 	 */
-	public String convertToBase64Image(InputStream inputStream);
+	String convertToBase64Image(InputStream inputStream);
 }

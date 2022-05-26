@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -44,7 +43,7 @@ public class FrontController {
 	}
 	
 	@RequestMapping("/homepage")
-	public String homepage(HttpSession session, HttpServletRequest req,HttpServletResponse res) {
+	public String homepage() {
 		
 //		res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
 //        res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
@@ -86,12 +85,12 @@ public class FrontController {
 	}
 	
 	@RequestMapping("/loginServlet")
-	public String login(HttpServletRequest request,HttpSession session,Model model) {
+	public String login(HttpServletRequest request,HttpSession session,@RequestParam String email,@RequestParam String password,Model model) {
 		
 		LOG.debug("Inside LoginServlet");
 		
-		String email = request.getParameter("email");
-		String password = request.getParameter("password");	
+//		String email = request.getParameter("email");
+//		String password = request.getParameter("password");
 		
 		LOG.info("Got email and password from login page");
 
@@ -100,8 +99,8 @@ public class FrontController {
 		LOG.debug("Inside LoginServlet : Email and password has been checked.");
 		
 		if(u != null) {
-			
-			session=request.getSession();  
+
+			session = request.getSession();
 			session.setAttribute("user", u);
 			
 			LOG.debug("Session created and UserBean set to attribute.");
@@ -131,7 +130,7 @@ public class FrontController {
 	}
 	
 	@RequestMapping("/adminServlet")
-	public String admin(HttpServletRequest request,HttpSession session,Model model) {
+	public String admin(Model model) {
 		
 		LOG.info("Inside Admin Servlet.");
 		
@@ -163,7 +162,7 @@ public class FrontController {
 	
 	@PostMapping("/authEmailServlet")
 	@ResponseBody
-	public String authEmailServlet(@RequestParam String email,HttpSession session) {
+	public String authEmailServlet(@RequestParam String email) {
 		LOG.debug("Inside Auth email servlet.");
 		
 		if(!us.checkEmail(email)) {
@@ -176,7 +175,7 @@ public class FrontController {
 	}
 	
 	@RequestMapping("/deleteServlet")
-	public String deleteServlet(@RequestParam("uid") String suid,HttpSession session) {
+	public String deleteServlet(@RequestParam("uid") String suid) {
 		
 		LOG.debug("Inside Delete Servlet.");
 		
@@ -223,8 +222,7 @@ public class FrontController {
 	public String newPasswordServlet(@RequestParam String email,
 									@RequestParam String password1,
 									@RequestParam String password2,
-									Model model,
-									HttpSession session) {
+									Model model) {
 		
 		LOG.debug("Inside New Password Servlet.");
 		
@@ -233,7 +231,7 @@ public class FrontController {
 		}else {
 			if(password1.equals(password2)) {
 				
-				LOG.debug("Password is same, reseting password.");
+				LOG.debug("Password is same, resetting password.");
 				
 				us.resetPass(email, password1);
 				

@@ -1,8 +1,8 @@
 @charset "ISO-8859-1";
 
 html,body{
-	margin: 0px;
-	padding: 0px;
+	margin: 0;
+	padding: 0;
 	background-image: url("https://i.ibb.co/TtLmb5y/bg.jpg");
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -28,7 +28,7 @@ html,body{
 }
 .address-group{
 	margin-top: 20px;
-	margin-bottom: 0px;
+	margin-bottom: 0;
 }
 .button-group{
 	margin-top: 15px;
