@@ -113,8 +113,8 @@ public class UserService implements UserInterface{
 			LOG.debug("No email found, registering to database.");
 			
 			//encrypting password
-			ShaEncryption sha = new ShaEncryption();
-			u.setPassword( sha.passwordEncryption( u.getPassword() ) );
+			ShaEncryption sha = ShaEncryption.getConstructor();
+			u.setPassword( sha.encode( u.getPassword() ) );
 			
 			LOG.info("Password Encrypted.");
 			
@@ -151,8 +151,8 @@ public class UserService implements UserInterface{
 		LOG.debug("Inside Reset Password Service.");
 		
 		//encrypting password
-		ShaEncryption sha = new ShaEncryption();
-		String encryptedPassword = sha.passwordEncryption(password);
+		ShaEncryption sha = ShaEncryption.getConstructor();
+		String encryptedPassword = sha.encode(password);
 		
 		LOG.info("Password Encrypted.");
 		
@@ -178,8 +178,8 @@ public class UserService implements UserInterface{
 	public UserBean checkUser(String email,String password) {
 		
 		//encrypting password
-		ShaEncryption sha = new ShaEncryption();
-		String encryptedPassword = sha.passwordEncryption(password);
+		ShaEncryption sha = ShaEncryption.getConstructor();
+		String encryptedPassword = sha.encode(password);
 		
 		LOG.info("Password Encrypted.");
 		

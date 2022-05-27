@@ -44,17 +44,6 @@ public class FrontController {
 	
 	@RequestMapping("/homepage")
 	public String homepage() {
-		
-//		res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-//        res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
-//        res.setDateHeader("Expires", 0);
-//		
-//        session = req.getSession(false);
-//        
-//        if(session==null || session.getAttribute("user")==null) {
-//        	return "index";
-//        }
-        
 		return "homepageView";
 	}
 	
@@ -100,7 +89,7 @@ public class FrontController {
 		
 		if(u != null) {
 
-			session = request.getSession();
+			session = request.getSession(false);
 			session.setAttribute("user", u);
 			
 			LOG.debug("Session created and UserBean set to attribute.");

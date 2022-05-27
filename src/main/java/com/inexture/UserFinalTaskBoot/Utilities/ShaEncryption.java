@@ -6,6 +6,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import org.apache.log4j.Logger;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * This class has password Encryption method which returns encrypted password. It accepts string password and
@@ -13,23 +14,42 @@ import org.apache.log4j.Logger;
  * @author Yash
  *
  */
-public class ShaEncryption {
+public class ShaEncryption implements PasswordEncoder {
+
+	private static final PasswordEncoder INSTANCE = new ShaEncryption();
+
+	private ShaEncryption(){}
+
 	static final Logger LOG = Logger.getLogger(ShaEncryption.class);
 	
 	/**
 	 * This method converts not encrypted password to sha256 encrypted password.
-	 * @param pass - Not encrypted user password
+	 * @param rawPassword - raw user password
 	 * @return password - SHA256 encrypted password
 	 */
-	public String passwordEncryption(String pass) {
+	@Override
+	public String encode(CharSequence rawPassword) {
 		LOG.debug("Inside Password Encryptor.");
 		try {
 			//returns encrypted password
-			return toHexString(getSHA(pass));
+			return toHexString(getSHA(rawPassword.toString()));
 		}catch(NoSuchAlgorithmException e) {
 			LOG.error("Something went wrong! Exception : {}",e);
-			return pass;
+			return rawPassword.toString();
 		}
+	}
+
+	@Override
+	public boolean matches(CharSequence rawPassword, String encodedPassword) {
+		return this.encode(rawPassword.toString()).equals(encodedPassword);
+	}
+
+	public static PasswordEncoder getInstance() {
+		return INSTANCE;
+	}
+
+	public static ShaEncryption getConstructor(){
+		return new ShaEncryption();
 	}
 	
 	/**

@@ -23,7 +23,7 @@
 		<div>
 			<h1 class="heading text-center">Login Page</h1>
 		</div>
-		<form action="loginServlet" method="post">
+		<form action="/login" method="post">
 			<div class="outer-box">
 				<div class="row">
 					<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-4 col-lg-offset-4">
@@ -37,7 +37,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="password1">Password</label>
+								<label for="password">Password</label>
 								<div class="input-group">
 									<span class="input-group-addon" id="basic-addon2">
 										<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>

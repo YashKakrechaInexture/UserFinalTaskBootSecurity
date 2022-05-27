@@ -5,7 +5,7 @@ spring:
     #active: profile1
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/userfinaltaskboot
+    url: jdbc:mysql://localhost:3306/userfinaltaskbootsecurity
     username: root
     password: Yash@1234
   jpa:
