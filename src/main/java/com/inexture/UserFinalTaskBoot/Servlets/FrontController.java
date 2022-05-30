@@ -132,22 +132,22 @@ public class FrontController {
 		return "admin";
 	}
 	
-	@RequestMapping("/logoutServlet")
-	public String logout(HttpServletRequest request,HttpSession session) {
-		
-		LOG.debug("Inside Logout Servlet.");
-		
-		session=request.getSession(false);  
-		
-		if(session!=null) {
-			LOG.debug("Session is not null, invalidating it.");
-			session.invalidate();
-		}
-		
-		LOG.debug("Redirecting to login page.");
-		return "indexView";
-		
-	}
+//	@RequestMapping("/logoutServlet")
+//	public String logout(HttpServletRequest request,HttpSession session) {
+//
+//		LOG.debug("Inside Logout Servlet.");
+//
+//		session=request.getSession(false);
+//
+//		if(session!=null) {
+//			LOG.debug("Session is not null, invalidating it.");
+//			session.invalidate();
+//		}
+//
+//		LOG.debug("Redirecting to login page.");
+//		return "indexView";
+//
+//	}
 	
 	@PostMapping("/authEmailServlet")
 	@ResponseBody

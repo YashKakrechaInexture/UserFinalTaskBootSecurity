@@ -39,7 +39,7 @@
 	<#include "header.ftl">
 	<div class="container">
 		<br>
-		<h4>Welcome Admin, ${Session.user.email}.</h4>
+		<#-- <h4>Welcome Admin, ${Session.user.email}.</h4> -->
 		
 		<div class="table-title">
 			<div class="row">
