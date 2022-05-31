@@ -26,9 +26,9 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-				<#-- <h4>Welcome, ${Session.user.email}.</h4> -->
+				<h4>Welcome, ${RequestParameters.email}.</h4>
 
-				<form action="editServlet?email=${Session.user.email}" method="post">
+				<form action="editServlet?email=${RequestParameters.email}" method="post">
 					<button type="submit" class="btn btn-default">Edit</button>
 				</form>
 			</div>

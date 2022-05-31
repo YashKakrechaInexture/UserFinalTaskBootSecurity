@@ -30,7 +30,7 @@
 			<div>
 				<h1 class="heading text-center">Edit Page</h1>
 			</div>
-			<form id="submitform" enctype="multipart/form-data" method="post" action="updateServlet?email=${user.email}&uid=${user.uid}">
+			<form id="submitform" enctype="multipart/form-data" method="post" action="updateServlet">
 		<#else>
 			<div>
 				<h1 class="heading text-center">Registration Page</h1>
@@ -40,6 +40,7 @@
 			<div class="formpart">
 				<#if validerror??><span class="error">${validerror?join("<br>")}</span></#if>
 				<span class="error">${errormsg!""}</span>
+				<input type="hidden" name="uid" value="${user.uid}">
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
@@ -66,6 +67,7 @@
 							<label for="email">Email Address</label>
 							<#if user??>
 								<br>${user.email}
+								<input type="hidden" name="email" value="${user.email}">
 							<#else>
 								<div class="input-group">
 									<span class="input-group-addon" id="basic-addon1">@</span>

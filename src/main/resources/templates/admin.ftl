@@ -76,7 +76,8 @@
 						<td>${user.hobby}</td>
 						<td>
 							<div class="forms">
-								<form action="editServlet?email=${user.email}" method="post" id="edit-form">
+								<form action="editServlet" method="post" id="edit-form">
+									<input type="hidden" name="email" value="${user.email}">
 									<button class="span-btn" id="edit-btn" role="button">
 										<span class="glyphicon glyphicon-cog span-blue-icon" aria-hidden="true"></span>
 									</button>

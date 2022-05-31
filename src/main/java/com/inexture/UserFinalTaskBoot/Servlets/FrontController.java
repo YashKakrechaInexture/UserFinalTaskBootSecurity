@@ -3,16 +3,29 @@ package com.inexture.UserFinalTaskBoot.Servlets;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import com.inexture.UserFinalTaskBoot.Beans.JwtResponse;
+import com.inexture.UserFinalTaskBoot.Services.CustomUserDetailsService;
+import com.inexture.UserFinalTaskBoot.Utilities.JwtUtil;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,10 +46,19 @@ import com.inexture.UserFinalTaskBoot.Utilities.Validation;
 public class FrontController {
 	
 	static final Logger LOG = Logger.getLogger(FrontController.class);
-	
+
+	@Autowired
+	private AuthenticationManager authenticationManager;
+
 	@Autowired
 	private UserInterface us;
-	
+
+	@Autowired
+	private CustomUserDetailsService customUserDetailsService;
+
+	@Autowired
+	private JwtUtil jwtUtil;
+
 	@RequestMapping({"/","/index"})
 	public String index() {
 		return "indexView";
@@ -73,50 +95,50 @@ public class FrontController {
 		}
 	}
 	
-	@RequestMapping("/loginServlet")
-	public String login(HttpServletRequest request,HttpSession session,@RequestParam String email,@RequestParam String password,Model model) {
-		
-		LOG.debug("Inside LoginServlet");
-		
-//		String email = request.getParameter("email");
-//		String password = request.getParameter("password");
-		
-		LOG.info("Got email and password from login page");
-
-		UserBean u = us.checkUser(email,password);
-		
-		LOG.debug("Inside LoginServlet : Email and password has been checked.");
-		
-		if(u != null) {
-
-			session = request.getSession(false);
-			session.setAttribute("user", u);
-			
-			LOG.debug("Session created and UserBean set to attribute.");
-			
-			if(u.getType()!=null && u.getType().equals("admin")) {
-				
-				LOG.info("User is admin, redirecting to admin page.");
-				return "redirect:adminServlet";
-				
-			}else if (u.getType()!=null && u.getType().equals("user")){
-				
-				LOG.info("User is normal user, redirecting to user home page.");
-				return "redirect:homepage";
-				
-			}else {
-				
-				LOG.error("User found but its not user or admin");
-				return "redirect:index";
-			}
-			
-		}else{
-			
-			LOG.info("No user found with given email and password, redirecting to login page.");
-			model.addAttribute("errormsg","No user found.");
-			return "indexView";
-		}
-	}
+//	@RequestMapping("/loginServlet")
+//	public String login(HttpServletRequest request,HttpSession session,@RequestParam String email,@RequestParam String password,Model model) {
+//
+//		LOG.debug("Inside LoginServlet");
+//
+////		String email = request.getParameter("email");
+////		String password = request.getParameter("password");
+//
+//		LOG.info("Got email and password from login page");
+//
+//		UserBean u = us.checkUser(email,password);
+//
+//		LOG.debug("Inside LoginServlet : Email and password has been checked.");
+//
+//		if(u != null) {
+//
+//			session = request.getSession(false);
+//			session.setAttribute("user", u);
+//
+//			LOG.debug("Session created and UserBean set to attribute.");
+//
+//			if(u.getType()!=null && u.getType().equals("admin")) {
+//
+//				LOG.info("User is admin, redirecting to admin page.");
+//				return "redirect:adminServlet";
+//
+//			}else if (u.getType()!=null && u.getType().equals("user")){
+//
+//				LOG.info("User is normal user, redirecting to user home page.");
+//				return "redirect:homepage";
+//
+//			}else {
+//
+//				LOG.error("User found but its not user or admin");
+//				return "redirect:index";
+//			}
+//
+//		}else{
+//
+//			LOG.info("No user found with given email and password, redirecting to login page.");
+//			model.addAttribute("errormsg","No user found.");
+//			return "indexView";
+//		}
+//	}
 	
 	@RequestMapping("/adminServlet")
 	public String admin(Model model) {
@@ -181,12 +203,12 @@ public class FrontController {
 	}
 	
 	@RequestMapping("/editServlet")
-	public ModelAndView editServlet(@RequestParam String email,HttpSession session) {
+	public ModelAndView editServlet(@RequestParam String email, Authentication authentication) {
 		LOG.debug("Inside Edit Servlet.");
-		
-		if(session != null && session.getAttribute("user")!=null) {
-			
-			LOG.debug("Session not null.");
+//		System.out.println(authentication.getAuthorities());
+//		if(session != null && session.getAttribute("user")!=null) {
+//
+//			LOG.debug("Session not null.");
 			
 			LOG.debug("Get email.");
 
@@ -194,17 +216,17 @@ public class FrontController {
 			
 			LOG.debug("Setting user bean to request attribute.");
 			
-			ModelAndView model = new ModelAndView("register");
+			ModelAndView model = new ModelAndView("registerView");
 			model.addObject("user", u);
 	        
 	        LOG.debug("Redirecting to edit jsp page.");
 			
 	        return model;
-		}else {
-			LOG.debug("Session is null, redirecting to login page.");
-			ModelAndView model = new ModelAndView("indexView");
-			return model;
-		}
+//		}else {
+//			LOG.debug("Session is null, redirecting to login page.");
+//			ModelAndView model = new ModelAndView("indexView");
+//			return model;
+//		}
 	}
 	
 	@RequestMapping("/newPasswordServlet")
@@ -433,5 +455,56 @@ public class FrontController {
 				return "redirect:index";
 			}
 		}
+	}
+
+	@RequestMapping("/login")
+	public String createToken(@RequestParam String email, @RequestParam String password, HttpServletResponse response) throws Exception {
+		try {
+			authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(email,password)
+			);
+		}catch (BadCredentialsException e){
+			throw new Exception("Incorrect Username or Password",e);
+		}
+		UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
+
+		String jwt = jwtUtil.generateToken(userDetails);
+
+		Cookie jwtTokenCookie = new Cookie("jwt",jwt);
+		response.addCookie(jwtTokenCookie);
+		LOG.debug("Cookie stored");
+		String targetUrl = null;
+
+		Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
+		for (GrantedAuthority grantedAuthority : authorities) {
+			String authorityName = grantedAuthority.getAuthority();
+			if(authorityName!=null && authorityName.equals("user")) {
+				LOG.debug("Role is user, redirecting to homepage.");
+				targetUrl = "homepageView";
+				break;
+			}
+			if(authorityName!=null && authorityName.equals("admin")) {
+				LOG.debug("Role is admin, redirecting to adminServlet.");
+				targetUrl = "adminServlet";
+				break;
+			}
+		}
+		return targetUrl;
+	}
+
+	@RequestMapping("/logoutServlet")
+	public String logout(HttpServletRequest request,HttpServletResponse response) {
+
+		LOG.debug("Inside Logout Servlet.");
+
+		Cookie jwtTokenCookie = new Cookie("jwt","");
+		jwtTokenCookie.setMaxAge(0);
+		response.addCookie(jwtTokenCookie);
+
+		LOG.debug("Token deleted from Cookie.");
+
+		LOG.debug("Redirecting to login page.");
+
+		return "indexView";
 	}
 }
