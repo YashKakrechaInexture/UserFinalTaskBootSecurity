@@ -33,15 +33,34 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .cors().disable()
                 .authorizeRequests()
-                .antMatchers("/","/index","/lib/**","/register","/resetPassword","/temp","/newPassword","/authEmailServlet","/newPasswordServlet","/resetPasswordServlet","/registerServlet","/token","/login","/logoutServlet").permitAll()
-                .antMatchers("/adminServlet","/deleteServlet","/editServlet","/updateServlet").permitAll()   //.hasAuthority("admin")
-                .antMatchers("/homepage").permitAll()   //.hasAuthority("user")
+                .antMatchers("/","/index","/lib/**","/register","/resetPassword","/temp","/newPassword","/authEmailServlet","/newPasswordServlet","/resetPasswordServlet","/registerServlet","/token","/login","/logoutServlet","/google").permitAll()
+                .antMatchers("/adminServlet","/deleteServlet").hasAuthority("admin")
+                .antMatchers("/homepage","/editServlet","/updateServlet").hasAuthority("user")
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .oauth2Login().loginPage("/google");
+
+//                .and()
+//                .formLogin()
+//                .loginPage("/index")
+//                .usernameParameter("email")
+//                .passwordParameter("password")
+//                .loginProcessingUrl("/login")
+////                .defaultSuccessUrl("/adminServlet").permitAll()
+//                .successHandler(myAuthenticationSuccessHandler());
+
+
+//                .and()
+//                .logout()
+//                .logoutUrl("/logoutServlet")
+//                .logoutSuccessUrl("/index");
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+
+//        http.oauth2Login();
 //                .and()
 //                .formLogin()
 //                .loginPage("/index")

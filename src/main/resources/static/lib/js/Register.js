@@ -1,12 +1,11 @@
 $(document).ready(function(){
 	$('#submit-btn').click(function() {
-      checked = $("input[type=checkbox]:checked").length;
+		let checked = $("input[type=checkbox]:checked").length;
 
-      if(!checked) {
-        alert("Please select one checkbox to submit.");
-        return false;
-      }
-
+      	if(!checked) {
+        	alert("Please select one checkbox to submit.");
+        	return false;
+      	}
     });
 	$('#profilepic').change(function(){
 		
@@ -26,7 +25,7 @@ $(document).ready(function(){
 	});
 	
 	function hideButton(){
-		var buttons = document.querySelectorAll('.remove-item');
+		let buttons = document.querySelectorAll('.remove-item');
 		console.log(buttons.length);
 		if(buttons.length <2){
 			$(".remove-item").hide();
@@ -53,7 +52,7 @@ $(document).ready(function(){
 			success: function(msg){
 				$('#msg').show();
 				$("#msg").html(msg);
-				if(msg=="<span style=\"color:red;\">Email Already Taken.</span>"){
+				if(msg==="<span style=\"color:red;\">Email Already Taken.</span>"){
 					$("#submit-btn").prop('disabled', true);
 				}else{
 					$("#submit-btn").prop('disabled', false);

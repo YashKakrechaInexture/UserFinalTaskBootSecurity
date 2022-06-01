@@ -19,6 +19,14 @@ spring:
     error:
       whitelabel:
         enabled: 'false'
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 849994850385-h3kmqurvu8kfi18m4flprrjfvu3cmo15.apps.googleusercontent.com
+            client-secret: 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
+            scope: email, profile
   #freemarker:
    # suffix: .ftl
    # template-loader-path: classpath:/templates

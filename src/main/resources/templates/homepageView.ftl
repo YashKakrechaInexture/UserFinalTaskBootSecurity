@@ -1,5 +1,5 @@
 <#import "spring.ftl" as spring />
-<html>
+<html lang="en">
 <head>
 	<meta charset="ISO-8859-1">
 	<title>User Panel</title>
@@ -26,9 +26,10 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-				<h4>Welcome, ${RequestParameters.email}.</h4>
+				<h4>Welcome, ${email}.</h4>
 
-				<form action="editServlet?email=${RequestParameters.email}" method="post">
+				<form action="editServlet" method="post">
+					<#-- <input type="hidden" name="email" value="${email}"> -->
 					<button type="submit" class="btn btn-default">Edit</button>
 				</form>
 			</div>

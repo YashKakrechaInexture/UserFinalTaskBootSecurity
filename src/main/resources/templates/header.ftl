@@ -1,7 +1,7 @@
 <#import "spring.ftl" as spring />
-<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+	<title>Header</title>
 	<!-- custom css -->
 	<link href="<@spring.url 'lib/css/header.css' />"
 		  rel="stylesheet" >

@@ -1,5 +1,5 @@
 <#import "spring.ftl" as spring />
-<html>
+<html lang="en">
 <head>
 	<meta charset="ISO-8859-1">
 	<title>User Detail Page</title>
@@ -40,7 +40,7 @@
 			<div class="formpart">
 				<#if validerror??><span class="error">${validerror?join("<br>")}</span></#if>
 				<span class="error">${errormsg!""}</span>
-				<input type="hidden" name="uid" value="${user.uid}">
+				<#if user??><input type="hidden" name="uid" value="${user.uid}"></#if>
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">

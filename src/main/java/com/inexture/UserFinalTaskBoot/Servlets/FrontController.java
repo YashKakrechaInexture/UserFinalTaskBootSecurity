@@ -30,11 +30,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -203,7 +199,7 @@ public class FrontController {
 	}
 	
 	@RequestMapping("/editServlet")
-	public ModelAndView editServlet(@RequestParam String email, Authentication authentication) {
+	public ModelAndView editServlet(@RequestAttribute String email, Authentication authentication) {
 		LOG.debug("Inside Edit Servlet.");
 //		System.out.println(authentication.getAuthorities());
 //		if(session != null && session.getAttribute("user")!=null) {
@@ -390,107 +386,109 @@ public class FrontController {
 	}
 	
 	@PostMapping(path="/updateServlet",consumes= {MediaType.MULTIPART_FORM_DATA_VALUE})
+	@ResponseBody
 	public String updateServlet(@RequestParam(name="profilepic",required=false) MultipartFile filePart,
 									@ModelAttribute UserBean user,
-									HttpSession session,
 									HttpServletRequest request,
+									@RequestAttribute String email,
 									Model model) {
-		
-		LOG.debug("Inside Update Servlet.");
-		
-		InputStream inputstream = null;
-		try {
-			if(null!=filePart && filePart.getSize()!=0) {
-				LOG.debug("Image is provided.");
-				inputstream = filePart.getInputStream();
-				user.setInputStream(inputstream);
-				try {
-					user.setImage(IOUtils.toByteArray(user.getInputStream()));
-				} catch (IOException e) {
-					LOG.fatal("Something went wrong! Exception : "+e);
-				}
-				
-			}else {
-				LOG.debug("Image is not provided, getting old image from dao.");
-				UserBean olduser = us.editProfile(user.getEmail());
-				inputstream = olduser.getInputStream();
-				user.setImage(olduser.getImage());
-			}
-		} catch (IOException e) {
-			LOG.error("Something went wrong! Exception : {}",e);
-		}
-		
-		if(!Validation.validate(user)) {
-			LOG.debug("Validation failed.");
-			model.addAttribute("errormsg","Input Field is empty.");
-			
-			return "redirect:editServlet?email="+user.getEmail();
-			
-		}else {
-			
-			LOG.debug("Validation passed, updating User data.");
-			
-			session=request.getSession(false);  
-			
-			if(session!=null && session.getAttribute("user")!=null) {
-				
-				LOG.debug("Session is not null, updating user.");
-				
-				us.updateUser(user);
-				
-				UserBean olduser = (UserBean)session.getAttribute("user");
-				
-				if(olduser.getType()!=null && olduser.getType().equals("user")) {
-					LOG.debug("Session is active and type is user. Redirecting to homepage.");
-					return "redirect:homepage";
-		        }else if(olduser.getType()!=null && olduser.getType().equals("admin")){
-		        	LOG.debug("Session is active and type is admin. Redirecting to admin servlet.");
-					return "redirect:adminServlet";
-		        }else {
-		        	LOG.error("Session is active but no user or admin found.");
-		        	return "redirect:index";
-		        }
-			}else {
-				LOG.warn("Session is null, redirecting to login page.");
-				return "redirect:index";
-			}
-		}
+		user.setEmail(email);
+		return user.toString();
+//		LOG.debug("Inside Update Servlet.");
+//
+//		InputStream inputstream = null;
+//		try {
+//			if(null!=filePart && filePart.getSize()!=0) {
+//				LOG.debug("Image is provided.");
+//				inputstream = filePart.getInputStream();
+//				user.setInputStream(inputstream);
+//				try {
+//					user.setImage(IOUtils.toByteArray(user.getInputStream()));
+//				} catch (IOException e) {
+//					LOG.fatal("Something went wrong! Exception : "+e);
+//				}
+//
+//			}else {
+//				LOG.debug("Image is not provided, getting old image from dao.");
+//				UserBean olduser = us.editProfile(user.getEmail());
+//				inputstream = olduser.getInputStream();
+//				user.setImage(olduser.getImage());
+//			}
+//		} catch (IOException e) {
+//			LOG.error("Something went wrong! Exception : {}",e);
+//		}
+//
+//		if(!Validation.validate(user)) {
+//			LOG.debug("Validation failed.");
+//			model.addAttribute("errormsg","Input Field is empty.");
+//
+//			return "redirect:editServlet?email="+user.getEmail();
+//
+//		}else {
+//
+//			LOG.debug("Validation passed, updating User data.");
+//
+//			session=request.getSession(false);
+//
+//			if(session!=null && session.getAttribute("user")!=null) {
+//
+//				LOG.debug("Session is not null, updating user.");
+//
+//				us.updateUser(user);
+//
+//				UserBean olduser = (UserBean)session.getAttribute("user");
+//
+//				if(olduser.getType()!=null && olduser.getType().equals("user")) {
+//					LOG.debug("Session is active and type is user. Redirecting to homepage.");
+//					return "redirect:homepage";
+//		        }else if(olduser.getType()!=null && olduser.getType().equals("admin")){
+//		        	LOG.debug("Session is active and type is admin. Redirecting to admin servlet.");
+//					return "redirect:adminServlet";
+//		        }else {
+//		        	LOG.error("Session is active but no user or admin found.");
+//		        	return "redirect:index";
+//		        }
+//			}else {
+//				LOG.warn("Session is null, redirecting to login page.");
+//				return "redirect:index";
+//			}
+//		}
 	}
 
-	@RequestMapping("/login")
-	public String createToken(@RequestParam String email, @RequestParam String password, HttpServletResponse response) throws Exception {
-		try {
-			authenticationManager.authenticate(
-					new UsernamePasswordAuthenticationToken(email,password)
-			);
-		}catch (BadCredentialsException e){
-			throw new Exception("Incorrect Username or Password",e);
-		}
-		UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
-
-		String jwt = jwtUtil.generateToken(userDetails);
-
-		Cookie jwtTokenCookie = new Cookie("jwt",jwt);
-		response.addCookie(jwtTokenCookie);
-		LOG.debug("Cookie stored");
-		String targetUrl = null;
-
-		Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
-		for (GrantedAuthority grantedAuthority : authorities) {
-			String authorityName = grantedAuthority.getAuthority();
-			if(authorityName!=null && authorityName.equals("user")) {
-				LOG.debug("Role is user, redirecting to homepage.");
-				targetUrl = "homepageView";
-				break;
-			}
-			if(authorityName!=null && authorityName.equals("admin")) {
-				LOG.debug("Role is admin, redirecting to adminServlet.");
-				targetUrl = "adminServlet";
-				break;
-			}
-		}
-		return targetUrl;
-	}
+//	@RequestMapping("/login")
+//	public String createToken(@RequestParam String email, @RequestParam String password, HttpServletResponse response) throws Exception {
+//		try {
+//			authenticationManager.authenticate(
+//					new UsernamePasswordAuthenticationToken(email,password)
+//			);
+//		}catch (BadCredentialsException e){
+//			throw new Exception("Incorrect Username or Password",e);
+//		}
+//		UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
+//
+//		String jwt = jwtUtil.generateToken(userDetails);
+//
+//		Cookie jwtTokenCookie = new Cookie("jwt",jwt);
+//		response.addCookie(jwtTokenCookie);
+//		LOG.debug("Cookie stored");
+//		String targetUrl = null;
+//
+//		Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
+//		for (GrantedAuthority grantedAuthority : authorities) {
+//			String authorityName = grantedAuthority.getAuthority();
+//			if(authorityName!=null && authorityName.equals("user")) {
+//				LOG.debug("Role is user, redirecting to homepage.");
+//				targetUrl = "homepageView";
+//				break;
+//			}
+//			if(authorityName!=null && authorityName.equals("admin")) {
+//				LOG.debug("Role is admin, redirecting to adminServlet.");
+//				targetUrl = "adminServlet";
+//				break;
+//			}
+//		}
+//		return targetUrl;
+//	}
 
 	@RequestMapping("/logoutServlet")
 	public String logout(HttpServletRequest request,HttpServletResponse response) {

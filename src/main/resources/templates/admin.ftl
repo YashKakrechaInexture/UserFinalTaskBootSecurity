@@ -1,6 +1,5 @@
 <#import "spring.ftl" as spring />
-<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 
 	<meta charset="ISO-8859-1">
@@ -98,7 +97,7 @@
 		
 		
 		<div>
-			<a class="btn btn-success" id="add-btn" href="register.jsp" role="button">Add User</a>
+			<a class="btn btn-success" id="add-btn" href="register" role="button">Add User</a>
 		</div>
 		
 		<br><br>
